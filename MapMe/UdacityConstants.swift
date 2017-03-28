@@ -20,7 +20,8 @@ extension UdacityClient {
         static let APIScheme = "https"
         static let udacityAPIHost = "www.udacity.com"
         static let udacityAPIPath = "/api"
-        static let parseAPIHost = ""
+        static let parseAPIHost = "parse.udacity.com"
+        static let parseAPIPath = "/parse/classes"
 //        static let AuthorizationURL = "authorization_url"
 //        static let AccountURL = "account_url"
     }
@@ -35,5 +36,17 @@ extension UdacityClient {
     struct JSONResponseKeys {
         static let session = "session"
         static let id = "id"
+        static let results = "results"
+        
+        static let createdAt = "createdAt"
+        static let firstName = "firstName"
+        static let lastName = "lastName"
+        static let latitude = "latitude"
+        static let longitude = "longitude"
+        static let mapString = "mapString"
+        static let mediaURL = "mediaURL"
+        static let objectId = "objectId"
+        static let uniqueKey = "uniqueKey"
+        static let updatedAt = "updatedAt"
     }
 }

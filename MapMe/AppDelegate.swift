@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    //var students = [Student]()
+    var annotations = [MKPointAnnotation]()
+    
     var window: UIWindow?
 
 

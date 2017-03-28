@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class UdacityLoginViewController: UIViewController {
 
@@ -43,8 +44,41 @@ class UdacityLoginViewController: UIViewController {
         UdacityClient.sharedInstance().getUdacitySessionIDforUser(userName, userPassword: userPassword) { sessionID, error in
             
             
-            print(sessionID)
+            //print(sessionID)
             
+            UdacityClient.sharedInstance().getStudents() { students, error in
+                
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                
+                guard let students = students else {
+                    return
+                }
+                
+                for student in students {
+                    
+                    // Create pin location from student coordinates
+                    let studentLat = student.latitude ?? 0
+                    let studentLong = student.longitude ?? 0
+                    let lat = CLLocationDegrees(studentLat)
+                    let long = CLLocationDegrees(studentLong)
+                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    
+                    let first = student.firstName ?? ""
+                    let last = student.lastName ?? ""
+                    let mediaURL = student.mediaURL ?? ""
+                    
+                    // Create annotation from student info
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate
+                    annotation.title = "\(first) \(last)"
+                    annotation.subtitle = mediaURL
+                    
+                    appDelegate.annotations.append(annotation)
+                }
+                
+                self.completeLogin()
+                
+            }
             
         }
         
