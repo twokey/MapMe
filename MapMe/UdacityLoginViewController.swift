@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 
 class UdacityLoginViewController: UIViewController {
-
+    
     // MARK: Outlets
     @IBOutlet weak var userEmail: UITextField!
     @IBOutlet weak var userPassword: UITextField!
@@ -18,17 +18,17 @@ class UdacityLoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-//        self.performSegue(withIdentifier: "userAuthorized", sender: self)
-
+        //        self.performSegue(withIdentifier: "userAuthorized", sender: self)
+        
     }
-
+    
     @IBAction func getStudentsLocation(_ sender: UIButton) {
         
         guard let userName = userEmail.text else {
@@ -41,63 +41,70 @@ class UdacityLoginViewController: UIViewController {
             return
         }
         
-        UdacityClient.sharedInstance().getUdacitySessionIDforUser(userName, userPassword: userPassword) { sessionID, error in
+        UdacityClient.sharedInstance().getUdacityStudentIDforUser(userName, userPassword: userPassword) { userID, error in
             
-            
-            //print(sessionID)
-            
-            UdacityClient.sharedInstance().getStudents() { students, error in
-                
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                
-                guard let students = students else {
+            if let userID = userID {
+                guard let userID = Int(userID) else {
                     return
                 }
                 
-                for student in students {
+                UdacityClient.sharedInstance().getUdacityUserPublicData(userID) { user, error in
                     
-                    // Create pin location from student coordinates
-                    let studentLat = student.latitude ?? 0
-                    let studentLong = student.longitude ?? 0
-                    let lat = CLLocationDegrees(studentLat)
-                    let long = CLLocationDegrees(studentLong)
-                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    if let user = user {
+                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                        appDelegate.user = user
+                    }
                     
-                    let first = student.firstName ?? ""
-                    let last = student.lastName ?? ""
-                    let mediaURL = student.mediaURL ?? ""
                     
-                    // Create annotation from student info
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    annotation.title = "\(first) \(last)"
-                    annotation.subtitle = mediaURL
-                    
-                    appDelegate.annotations.append(annotation)
+                    UdacityClient.sharedInstance().getStudents() { students, error in
+                        
+                        guard let students = students else {
+                            return
+                        }
+                        
+                        for student in students {
+                            
+                            // Create pin location from student coordinates
+                            let studentLat = student.latitude ?? 0
+                            let studentLong = student.longitude ?? 0
+                            let lat = CLLocationDegrees(studentLat)
+                            let long = CLLocationDegrees(studentLong)
+                            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                            
+                            let first = student.firstName ?? ""
+                            let last = student.lastName ?? ""
+                            let mediaURL = student.mediaURL ?? ""
+                            
+                            // Create annotation from student info
+                            let annotation = MKPointAnnotation()
+                            annotation.coordinate = coordinate
+                            annotation.title = "\(first) \(last)"
+                            annotation.subtitle = mediaURL
+                            
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.annotations.append(annotation)
+                        }
+                        
+                        self.completeLogin()
+                    }
                 }
-                
-                self.completeLogin()
-                
             }
-            
         }
-        
     }
-    
     
     private func completeLogin() {
         performUIUpdatesOnMain {
             self.performSegue(withIdentifier: "userAuthorized", sender: self)
         }
     }
-
+    
     // MARK: - Navigation
-
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         // print("We are about to show main screen")
     }
-
-
+    
+    
 }

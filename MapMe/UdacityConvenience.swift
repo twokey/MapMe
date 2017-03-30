@@ -9,8 +9,56 @@
 import Foundation
 
 extension UdacityClient {
-    
-    func getUdacitySessionIDforUser(_ userName: String, userPassword: String, completionHandlerForSessionID: @escaping (_ sessionID: String?, _ error: NSError?) -> Void) {
+
+    func getUdacityUserPublicData(_ userId: Int, completionHandlerForUserPublicData: @escaping (_ student: Student?, _ error: NSError?) -> Void) {
+
+        let method = "/users/\(userId)"
+        
+        let url = udacityURLFromParameters([:], withPathExtension: method)
+        print(url)
+        let request = NSMutableURLRequest(url: url)
+        
+        let _ = UdacityClient.sharedInstance().taskForUdacityPOSTRequest(request) { (parsedResult, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForUserPublicData(nil, NSError(domain: "getUdacityUserPublicData", code: 1, userInfo: userInfo))
+            }
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            guard let parsedResult = parsedResult as? NSDictionary else {
+                sendError("No parsed result was returned")
+                return
+            }
+            
+            guard let user = parsedResult[UdacityClient.JSONResponseKeys.user] as? NSDictionary else {
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.user)")
+                return
+            }
+            
+            guard let firstName = user[UdacityClient.JSONResponseKeys.userFirstName] as? String else {
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.userFirstName)")
+                return
+            }
+            
+            guard let lastName = user[UdacityClient.JSONResponseKeys.userLastName] as? String else {
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.userLastName)")
+                return
+            }
+            
+            let uniqueKey = String(userId)
+            
+            let student = Student(uniqueKey: uniqueKey, firstName: firstName, lastName: lastName)
+            
+            completionHandlerForUserPublicData(student, nil)
+        }
+    }
+
+    func getUdacityStudentIDforUser(_ userName: String, userPassword: String, completionHandlerForSessionID: @escaping (_ studentID: String?, _ error: NSError?) -> Void) {
         
         let method = "/session"
         let jsonBody = "{\"udacity\": {\"username\": \"\(userName)\", \"password\": \"\(userPassword)\"}}"
@@ -40,17 +88,17 @@ extension UdacityClient {
                 return
             }
             
-            guard let session = parsedResult[UdacityClient.JSONResponseKeys.session] as? NSDictionary else {
-                sendError("Login Failed no key \(UdacityClient.JSONResponseKeys.session)")
+            guard let accountDictionary = parsedResult[UdacityClient.JSONResponseKeys.account] as? NSDictionary else {
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.account)")
                 return
             }
         
-            guard let sessionID = session[UdacityClient.JSONResponseKeys.id] as? String else {
-                sendError("Login Failed no key \(UdacityClient.JSONResponseKeys.id)")
+            guard let studentID = accountDictionary[UdacityClient.JSONResponseKeys.key] as? String else {
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.id)")
                 return
             }
             
-            completionHandlerForSessionID(sessionID, nil)
+            completionHandlerForSessionID(studentID, nil)
         }
     }
     
@@ -100,7 +148,7 @@ extension UdacityClient {
                 let uniqueKey = student[UdacityClient.JSONResponseKeys.uniqueKey] as? String
                 let updatedAt = student[UdacityClient.JSONResponseKeys.updatedAt] as? String
                 
-                let student = Student(objectID: objectId,
+                let student = Student(objectId: objectId,
                                       uniqueKey: uniqueKey,
                                       firstName: firstName,
                                       lastName: lastName,
@@ -119,6 +167,56 @@ extension UdacityClient {
         }
         
     }
+    
+    func postStudentLocationFor(student: Student, completionHandlerForPostStudentLocation: @escaping (_ students: String?, _ errorString: NSError?) -> Void) {
+        
+        let method = "/StudentLocation"
+        let url = parseURLFromParameters([:], withPathExtension: method)
+        
+        print("url= \(url)")
+        
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+        request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = httpBodyForPostStudentLocation(student).data(using: String.Encoding.utf8)
+        
+        print("httpBody = \(httpBodyForPostStudentLocation(student))")
+        print("request= \(request)")
+        
+        let _ = UdacityClient.sharedInstance().taskForParseGETRequest(request) { (parsedResult, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForPostStudentLocation(nil, NSError(domain: "getStudents", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            guard let parsedResult = parsedResult as? NSDictionary else {
+                sendError("No parsed result was returned")
+                return
+            }
+            
+            guard let postedLocationDictionary = parsedResult as? [String:AnyObject] else {
+                print("Cannot find key \(UdacityClient.JSONResponseKeys.results)")
+                return
+            }
+            
+            guard let objectID = postedLocationDictionary[UdacityClient.JSONResponseKeys.objectId] as? String else {
+                sendError("Cannot find key \(UdacityClient.JSONResponseKeys.objectId)")
+                return
+            }
+            
+            completionHandlerForPostStudentLocation(objectID, nil)
+        }
+    }
+
     
     // MARK: Helpers
     
@@ -151,6 +249,23 @@ extension UdacityClient {
         }
         
         return components.url!
+    }
+    
+    private func httpBodyForPostStudentLocation(_ student: Student) -> String {
+
+        //let createdAt = student.createdAt
+        let firstName = student.firstName!
+        let lastName = student.lastName!
+        let latitude = student.latitude!
+        let longitude = student.longitude!
+        let mapString = student.mapString!
+        let mediaURL = student.mediaURL!
+        //let objectId = student.objectID!
+        let uniqueKey = student.uniqueKey!
+        //let updatedAt = student.updatedAt!
+        
+        let httpBody = "{\"uniqueKey\": \"\(uniqueKey)\",\"firstName\": \"\(firstName)\", \"lastName\": \"\(lastName)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(latitude), \"longitude\": \(longitude)}"
+        return httpBody
     }
 
     

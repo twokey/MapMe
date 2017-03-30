@@ -19,11 +19,9 @@ class MapViewController: UIViewController {
     
     // MARK: Properties
     
-//    let  udacianPins: String = ""
     var annotations: [MKAnnotation] {
         return (UIApplication.shared.delegate as! AppDelegate).annotations
-    }
-    
+    }    
     
     // Set initial location in Vancouver
     let initialLocation = CLLocation(latitude: 49.248526, longitude: -123.116009)

@@ -34,9 +34,14 @@ extension UdacityClient {
     }
     
     struct JSONResponseKeys {
+        static let account = "account"
+        static let key = "key"
         static let session = "session"
         static let id = "id"
         static let results = "results"
+        static let user = "user"
+        static let userLastName = "last_name"
+        static let userFirstName = "first_name"
         
         static let createdAt = "createdAt"
         static let firstName = "firstName"

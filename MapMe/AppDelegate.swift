@@ -12,7 +12,7 @@ import MapKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    //var students = [Student]()
+    var user = Student()
     var annotations = [MKPointAnnotation]()
     
     var window: UIWindow?
