@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C415AAF1E8E2B19008CE766 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAB1E8E2B19008CE766 /* Bolts.framework */; };
+		9C415AB01E8E2B19008CE766 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAC1E8E2B19008CE766 /* FBSDKCoreKit.framework */; };
+		9C415AB11E8E2B19008CE766 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAD1E8E2B19008CE766 /* FBSDKLoginKit.framework */; };
+		9C415AB21E8E2B19008CE766 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAE1E8E2B19008CE766 /* FBSDKShareKit.framework */; };
 		9C8356151E8738D000522471 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8356141E8738D000522471 /* AppDelegate.swift */; };
 		9C83561A1E8738D000522471 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C8356181E8738D000522471 /* Main.storyboard */; };
 		9C83561C1E8738D000522471 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C83561B1E8738D000522471 /* Assets.xcassets */; };
@@ -24,6 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C415AAB1E8E2B19008CE766 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		9C415AAC1E8E2B19008CE766 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		9C415AAD1E8E2B19008CE766 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		9C415AAE1E8E2B19008CE766 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		9C8356111E8738D000522471 /* MapMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C8356141E8738D000522471 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C8356191E8738D000522471 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -47,17 +55,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C415AB21E8E2B19008CE766 /* FBSDKShareKit.framework in Frameworks */,
+				9C415AAF1E8E2B19008CE766 /* Bolts.framework in Frameworks */,
+				9C415AB01E8E2B19008CE766 /* FBSDKCoreKit.framework in Frameworks */,
+				9C415AB11E8E2B19008CE766 /* FBSDKLoginKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9C415AA21E8E2A2E008CE766 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9C415AAB1E8E2B19008CE766 /* Bolts.framework */,
+				9C415AAC1E8E2B19008CE766 /* FBSDKCoreKit.framework */,
+				9C415AAD1E8E2B19008CE766 /* FBSDKLoginKit.framework */,
+				9C415AAE1E8E2B19008CE766 /* FBSDKShareKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9C8356081E8738CF00522471 = {
 			isa = PBXGroup;
 			children = (
 				9C8356131E8738D000522471 /* MapMe */,
 				9C8356121E8738D000522471 /* Products */,
+				9C415AA21E8E2A2E008CE766 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -346,10 +370,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 85R75EY8F6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MapMe",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MapMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.twokey.MapMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -359,10 +390,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 85R75EY8F6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MapMe",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = MapMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.twokey.MapMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

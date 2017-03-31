@@ -8,18 +8,28 @@
 
 import UIKit
 import MapKit
+import FBSDKLoginKit
 
 class UdacityLoginViewController: UIViewController {
     
     // MARK: Outlets
     @IBOutlet weak var userEmail: UITextField!
     @IBOutlet weak var userPassword: UITextField!
+    @IBOutlet weak var fbLoginButton: FBSDKLoginButton!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        if FBSDKAccessToken.current() != nil {
+            print("already logged in")
+        } else {
+            fbLoginButton.readPermissions = ["email"]
+            fbLoginButton.delegate = self
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -106,5 +116,30 @@ class UdacityLoginViewController: UIViewController {
         // print("We are about to show main screen")
     }
     
+    
+}
+
+extension UdacityLoginViewController: FBSDKLoginButtonDelegate {
+    
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        print("logged in")
+        print(FBSDKAccessToken.current())
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+        print("logged out")
+    }
+    
+    func logUserData() {
+        let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+        graphRequest?.start() { connection, result, error in
+            if error != nil {
+                print(error)
+            } else {
+                print(result)
+            }
+            
+        }
+    }
     
 }
