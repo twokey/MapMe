@@ -22,9 +22,11 @@ class UdacityLoginViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        
+        FBSDKProfile.enableUpdates(onAccessTokenChange: true)
         if FBSDKAccessToken.current() != nil {
-            print("already logged in")
+            print("Already logged in")
+            print(FBSDKAccessToken.current().tokenString)
+            loginWithFBToken(FBSDKAccessToken.current().tokenString)
         } else {
             fbLoginButton.readPermissions = ["email"]
             fbLoginButton.delegate = self
@@ -58,64 +60,71 @@ class UdacityLoginViewController: UIViewController {
                     return
                 }
                 
-                UdacityClient.sharedInstance().getUdacityUserPublicData(userID) { user, error in
-                    
-                    if let user = user {
-                        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                        appDelegate.user = user
-                    }
-                    
-                    
-                    UdacityClient.sharedInstance().getStudents() { students, error in
-                        
-                        guard let students = students else {
-                            return
-                        }
-                        
-                        for student in students {
-                            
-                            // Create pin location from student coordinates
-                            let studentLat = student.latitude ?? 0
-                            let studentLong = student.longitude ?? 0
-                            let lat = CLLocationDegrees(studentLat)
-                            let long = CLLocationDegrees(studentLong)
-                            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                            
-                            let first = student.firstName ?? ""
-                            let last = student.lastName ?? ""
-                            let mediaURL = student.mediaURL ?? ""
-                            
-                            // Create annotation from student info
-                            let annotation = MKPointAnnotation()
-                            annotation.coordinate = coordinate
-                            annotation.title = "\(first) \(last)"
-                            annotation.subtitle = mediaURL
-                            
-                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                            appDelegate.annotations.append(annotation)
-                        }
-                        
-                        self.completeLogin()
-                    }
-                }
+                self.loginWithUserID(userID)
+                
             }
         }
     }
     
-    private func completeLogin() {
-        performUIUpdatesOnMain {
-            self.performSegue(withIdentifier: "userAuthorized", sender: self)
+    func loginWithFBToken(_ fbToken: String) {
+        
+        UdacityClient.sharedInstance().postSessionWithFacebookToken(fbToken) { userID, error in
+                
+            if let userID = userID {
+                guard let userID = Int(userID) else {
+                    return
+                }
+                
+                self.loginWithUserID(userID)
+            }
         }
     }
     
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        // print("We are about to show main screen")
+    func loginWithUserID(_ userID: Int) {
+        
+        UdacityClient.sharedInstance().getUdacityUserPublicData(userID) { user, error in
+
+            if let user = user {
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.user = user
+            }
+
+
+            UdacityClient.sharedInstance().getStudents() { students, error in
+
+                guard let students = students else {
+                    return
+                }
+
+                for student in students {
+
+                    // Create pin location from student coordinates
+                    let studentLat = student.latitude ?? 0
+                    let studentLong = student.longitude ?? 0
+                    let lat = CLLocationDegrees(studentLat)
+                    let long = CLLocationDegrees(studentLong)
+                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+
+                    let first = student.firstName ?? ""
+                    let last = student.lastName ?? ""
+                    let mediaURL = student.mediaURL ?? ""
+
+                    // Create annotation from student info
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = coordinate
+                    annotation.title = "\(first) \(last)"
+                    annotation.subtitle = mediaURL
+
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.annotations.append(annotation)
+                }
+                
+                performUIUpdatesOnMain {
+                    self.performSegue(withIdentifier: "userAuthorized", sender: self)
+                }
+            }
+        }
     }
-    
     
 }
 
@@ -123,7 +132,8 @@ extension UdacityLoginViewController: FBSDKLoginButtonDelegate {
     
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         print("logged in")
-        print(FBSDKAccessToken.current())
+        print(FBSDKAccessToken.current().tokenString)
+        loginWithFBToken(FBSDKAccessToken.current().tokenString)
     }
     
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
@@ -134,9 +144,9 @@ extension UdacityLoginViewController: FBSDKLoginButtonDelegate {
         let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
         graphRequest?.start() { connection, result, error in
             if error != nil {
-                print(error)
+                print(error!)
             } else {
-                print(result)
+               print(result!)
             }
             
         }

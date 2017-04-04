@@ -10,12 +10,60 @@ import Foundation
 
 extension UdacityClient {
 
+    func postSessionWithFacebookToken(_ token: String, completionHandlerForPostSession: @escaping (_ resul: String?, _ error: NSError?) -> Void) {
+        
+        let method = "/session"
+        let url = udacityURLFromParameters([:], withPathExtension: method)
+        let jsonBody = "{\"facebook_mobile\": {\"access_token\": \"\(token)\"}}"
+        print(jsonBody)
+        
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        
+        let _ = UdacityClient.sharedInstance().taskForUdacityPOSTRequest(request) { (parsedResult, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForPostSession(nil, NSError(domain: "postSessionWithFacebookToken", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            guard let parsedResult = parsedResult as? NSDictionary else {
+                sendError("No parsed result was returned")
+                return
+            }
+            
+            guard let accountDictionary = parsedResult[UdacityClient.JSONResponseKeys.account] as? NSDictionary else {
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.account)")
+                return
+            }
+            
+            guard let studentID = accountDictionary[UdacityClient.JSONResponseKeys.key] as? String else {
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.id)")
+                return
+            }
+            
+            completionHandlerForPostSession(studentID, nil)
+        }
+
+        
+        
+    }
+    
     func getUdacityUserPublicData(_ userId: Int, completionHandlerForUserPublicData: @escaping (_ student: Student?, _ error: NSError?) -> Void) {
 
         let method = "/users/\(userId)"
         
         let url = udacityURLFromParameters([:], withPathExtension: method)
-        print(url)
+
         let request = NSMutableURLRequest(url: url)
         
         let _ = UdacityClient.sharedInstance().taskForUdacityPOSTRequest(request) { (parsedResult, error) in
@@ -61,9 +109,9 @@ extension UdacityClient {
     func getUdacityStudentIDforUser(_ userName: String, userPassword: String, completionHandlerForSessionID: @escaping (_ studentID: String?, _ error: NSError?) -> Void) {
         
         let method = "/session"
-        let jsonBody = "{\"udacity\": {\"username\": \"\(userName)\", \"password\": \"\(userPassword)\"}}"
-        
         let url = udacityURLFromParameters([:], withPathExtension: method)
+        
+        let jsonBody = "{\"udacity\": {\"username\": \"\(userName)\", \"password\": \"\(userPassword)\"}}"
         
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "POST"
@@ -78,6 +126,7 @@ extension UdacityClient {
                 let userInfo = [NSLocalizedDescriptionKey: error]
                 completionHandlerForSessionID(nil, NSError(domain: "getUdacitySessionIDforUser", code: 1, userInfo: userInfo))
             }
+            
             guard (error == nil) else {
                 sendError("There was an error with your request: \(error)")
                 return
