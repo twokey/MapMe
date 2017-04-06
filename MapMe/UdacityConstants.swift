@@ -22,8 +22,6 @@ extension UdacityClient {
         static let udacityAPIPath = "/api"
         static let parseAPIHost = "parse.udacity.com"
         static let parseAPIPath = "/parse/classes"
-//        static let AuthorizationURL = "authorization_url"
-//        static let AccountURL = "account_url"
     }
     
     struct ParameterKeys {

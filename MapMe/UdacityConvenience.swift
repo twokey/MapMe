@@ -53,9 +53,6 @@ extension UdacityClient {
             
             completionHandlerForPostSession(studentID, nil)
         }
-
-        
-        
     }
     
     func getUdacityUserPublicData(_ userId: Int, completionHandlerForUserPublicData: @escaping (_ student: Student?, _ error: NSError?) -> Void) {
@@ -317,53 +314,4 @@ extension UdacityClient {
         return httpBody
     }
 
-    
 }
-
-//                guard let createdAt = student[UdacityClient.JSONResponseKeys.createdAt] as? String else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.createdAt)' in \(student)")
-//                    return
-//                }
-//
-//                guard let firstName = student[UdacityClient.JSONResponseKeys.firstName] as? String else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.firstName)' in \(student)")
-//                    return
-//                }
-//                guard let lastName = student[UdacityClient.JSONResponseKeys.lastName] as? String else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.lastName)' in \(student)")
-//                    return
-//                }
-//                guard let latitude = student[UdacityClient.JSONResponseKeys.latitude] as? Double else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.latitude)' in \(student)")
-//                    return
-//                }
-//                guard let longitude = student[UdacityClient.JSONResponseKeys.longitude] as? Double else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.longitude)' in \(student)")
-//                    return
-//                }
-//
-//                guard let mapString = student[UdacityClient.JSONResponseKeys.mapString] as? String else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.mapString)' in \(student)")
-//                    return
-//                }
-//
-//                guard let mediaURL = student[UdacityClient.JSONResponseKeys.mediaURL] as? String else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.mediaURL)' in \(student)")
-//                    return
-//                }
-//
-//                guard let objectId = student[UdacityClient.JSONResponseKeys.objectId] as? String else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.objectId)' in \(student)")
-//                    return
-//                }
-//
-//                guard let uniqueKey = student[UdacityClient.JSONResponseKeys.uniqueKey] as? String else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.uniqueKey)' in \(student)")
-//                    return
-//                }
-//
-//                guard let updatedAt = student[UdacityClient.JSONResponseKeys.updatedAt] as? String else {
-//                    print("Cannot find key '\(UdacityClient.JSONResponseKeys.updatedAt)' in \(student)")
-//                    return
-//                }
-

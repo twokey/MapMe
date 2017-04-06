@@ -31,7 +31,6 @@ class PostLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,28 +48,19 @@ class PostLocationViewController: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
     @IBAction func postLocation(_ sender: UIButton) {
         
         let latitude = studyLocation.coordinate.latitude
         let longitude = studyLocation.coordinate.longitude
         let student = Student(uniqueKey: user.uniqueKey, firstName: user.firstName, lastName: user.lastName, mapString: userAddress, mediaURL: linkTextView.text!, latitude: latitude, longitude: longitude)
         
-        print(student)
+//        print(student)
         
         UdacityClient.sharedInstance().postStudentLocationFor(student: student) { objectId, error in
             
-            print(objectId)
-            print(error)
+            performUIUpdatesOnMain {
+                self.navigationController?.popViewController(animated: true)
+            }
         }
         
     }

@@ -16,18 +16,10 @@ class ChooseLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+    
+    // MARK: Actions
     
     @IBAction func geocodeForward(_ sender: UIButton) {
         
@@ -50,11 +42,14 @@ class ChooseLocationViewController: UIViewController {
                 
                 self.navigationController?.pushViewController(postLocationVC, animated: true)
             }
-            
-            
-
         }
-        
     }
+    
+    @IBAction func dismissViewController(_ sender: UIBarButtonItem) {
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
 
 }
