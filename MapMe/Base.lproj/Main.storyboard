@@ -271,7 +271,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-cT-8yZ">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-cT-8yZ">
                                 <rect key="frame" x="16" y="72" width="343" height="239"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqn-dD-CAW">
@@ -289,6 +289,9 @@
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Address Here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wqq-RO-bVW">
                                         <rect key="frame" x="0.0" y="43" width="343" height="150"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="fbt-sp-25C"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <dataDetectorType key="dataDetectorTypes" address="YES"/>
@@ -339,29 +342,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Enter your link here" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
-                                <rect key="frame" x="16" y="72" width="343" height="107"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                            </textView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="47V-5t-mOp">
-                                <rect key="frame" x="16" y="207" width="343" height="452"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBb-D2-0IP">
-                                <rect key="frame" x="126" y="554" width="124" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Post Location"/>
-                                <connections>
-                                    <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="mIW-lf-ES1"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wRf-Eg-2dl">
+                                <rect key="frame" x="16" y="72" width="343" height="595"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter your link here" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="107"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="107" id="XDX-Xo-MsX"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBb-D2-0IP">
+                                        <rect key="frame" x="0.0" y="123" width="343" height="40"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="bEF-gz-h7W"/>
+                                        </constraints>
+                                        <state key="normal" title="Post Location"/>
+                                        <connections>
+                                            <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="mIW-lf-ES1"/>
+                                        </connections>
+                                    </button>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="47V-5t-mOp">
+                                        <rect key="frame" x="0.0" y="179" width="343" height="416"/>
+                                    </mapView>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.3737792969" green="1" blue="0.94268120659999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="wRf-Eg-2dl" firstAttribute="leading" secondItem="bMJ-sO-TbR" secondAttribute="leadingMargin" id="3DF-5w-IW3"/>
+                            <constraint firstItem="wRf-Eg-2dl" firstAttribute="trailing" secondItem="bMJ-sO-TbR" secondAttribute="trailingMargin" id="4Fk-sp-e01"/>
+                            <constraint firstAttribute="bottom" secondItem="wRf-Eg-2dl" secondAttribute="bottom" id="53q-8V-Ddn"/>
+                            <constraint firstItem="wRf-Eg-2dl" firstAttribute="top" secondItem="D4A-yU-1uF" secondAttribute="bottom" constant="8" id="bB8-ZC-MF2"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="o1q-7y-66b">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="KnB-W9-6wN"/>
@@ -417,6 +434,6 @@
         <image name="Pin" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8dw-UN-NuC"/>
+        <segue reference="j6o-r6-VnI"/>
     </inferredMetricsTieBreakers>
 </document>

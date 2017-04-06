@@ -54,10 +54,16 @@ class MapViewController: UIViewController {
         
         // Setup UI
         activityIndicator.startAnimating()
+        mapView.removeAnnotations(mapView.annotations)
         
         // Get student's locations and links
         UdacityClient.sharedInstance().getStudents() { students, error in
             
+            // Get reference to app delegate and clean students locations
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.annotations.removeAll()
+
+
             guard let students = students else {
                 return
             }
@@ -82,13 +88,14 @@ class MapViewController: UIViewController {
                 annotation.subtitle = mediaURL
                 
                 // Save student information (annotations) in app delegate
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 appDelegate.annotations.append(annotation)
             }
             
             // We have user data, students data (annotations) we can continue to map VC
             performUIUpdatesOnMain {
                 self.activityIndicator.stopAnimating()
+                self.mapView.addAnnotations(self.annotations)
+
             }
         }
     }
