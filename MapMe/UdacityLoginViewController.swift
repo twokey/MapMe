@@ -64,7 +64,10 @@ class UdacityLoginViewController: UIViewController {
         
         // Login with user ID
         UdacityClient.sharedInstance().getUdacityUserPublicData(userID) { user, error in
-
+            
+            // TODO: Add guards for errors
+            
+            // Get reference to App Delegate where we keep our model
             if let user = user {
                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
                 appDelegate.user = user

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -157,11 +158,16 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="O6Z-EC-RPi">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                             </mapView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="MBj-8u-epo">
+                                <rect key="frame" x="177" y="323.5" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="O6Z-EC-RPi" firstAttribute="leading" secondItem="eK7-BL-Azv" secondAttribute="leading" id="0Fh-8s-Q9V"/>
                             <constraint firstItem="O6Z-EC-RPi" firstAttribute="top" secondItem="ep2-SR-hIS" secondAttribute="bottom" id="3Jf-Xv-4Io"/>
+                            <constraint firstItem="MBj-8u-epo" firstAttribute="centerX" secondItem="eK7-BL-Azv" secondAttribute="centerX" id="AzR-7t-S5f"/>
+                            <constraint firstItem="MBj-8u-epo" firstAttribute="centerY" secondItem="eK7-BL-Azv" secondAttribute="centerY" id="WjY-9f-MNc"/>
                             <constraint firstAttribute="trailing" secondItem="O6Z-EC-RPi" secondAttribute="trailing" id="Xt7-2a-wuy"/>
                             <constraint firstItem="ksW-0z-6gt" firstAttribute="top" secondItem="O6Z-EC-RPi" secondAttribute="bottom" id="rk9-zf-41R"/>
                         </constraints>
@@ -174,10 +180,15 @@
                                     <segue destination="J3Q-Hh-Irs" kind="presentation" id="j6o-r6-VnI"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="Klx-Zj-3Jm"/>
+                            <barButtonItem systemItem="refresh" id="Klx-Zj-3Jm">
+                                <connections>
+                                    <action selector="reloadStudentLocations:" destination="iy2-pq-7Jw" id="mvD-Cu-ZDw"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="activityIndicator" destination="MBj-8u-epo" id="Y66-ei-p52"/>
                         <outlet property="mapView" destination="O6Z-EC-RPi" id="GWM-fW-4Sv"/>
                     </connections>
                 </viewController>
@@ -194,7 +205,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AnnotationCellReuseIdentifier" textLabel="fSl-cV-ZUn" detailTextLabel="Vha-TE-Qyy" rowHeight="54" style="IBUITableViewCellStyleSubtitle" id="fPI-NQ-vya">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AnnotationCellReuseIdentifier" textLabel="fSl-cV-ZUn" detailTextLabel="Vha-TE-Qyy" imageView="W5t-mO-m2G" rowHeight="54" style="IBUITableViewCellStyleSubtitle" id="fPI-NQ-vya">
                                 <rect key="frame" x="0.0" y="28" width="375" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fPI-NQ-vya" id="2cj-2I-1Mg">
@@ -202,19 +213,23 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fSl-cV-ZUn">
-                                            <rect key="frame" x="15" y="10" width="33.5" height="20.5"/>
+                                            <rect key="frame" x="62" y="10" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vha-TE-Qyy">
-                                            <rect key="frame" x="15" y="30.5" width="44" height="14.5"/>
+                                            <rect key="frame" x="62" y="30.5" width="44" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Pin" id="W5t-mO-m2G">
+                                            <rect key="frame" x="15" y="10" width="32" height="32"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -232,7 +247,11 @@
                                     <segue destination="J3Q-Hh-Irs" kind="presentation" id="8dw-UN-NuC"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="refresh" id="saT-f6-Vgt"/>
+                            <barButtonItem systemItem="refresh" id="saT-f6-Vgt">
+                                <connections>
+                                    <action selector="reloadStudentConnections:" destination="A5N-NE-KSC" id="WFn-wn-7bl"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
@@ -252,36 +271,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Enter Your Address Here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wqq-RO-bVW">
-                                <rect key="frame" x="16" y="186" width="343" height="259"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqn-dD-CAW">
-                                <rect key="frame" x="16" y="72" width="343" height="106"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Where are you studying today?">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system" size="23"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKF-7q-Biz">
-                                <rect key="frame" x="110" y="539" width="156" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Find on the Map"/>
-                                <connections>
-                                    <action selector="geocodeForward:" destination="m5G-yG-rb0" eventType="touchUpInside" id="84r-P5-xgI"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-cT-8yZ">
+                                <rect key="frame" x="16" y="72" width="343" height="239"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqn-dD-CAW">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="27"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Where are you studying today?">
+                                                <attributes>
+                                                    <font key="NSFont" metaFont="system" size="23"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Address Here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wqq-RO-bVW">
+                                        <rect key="frame" x="0.0" y="43" width="343" height="150"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <dataDetectorType key="dataDetectorTypes" address="YES"/>
+                                    </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKF-7q-Biz">
+                                        <rect key="frame" x="0.0" y="209" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Find on the Map"/>
+                                        <connections>
+                                            <action selector="geocodeForward:" destination="m5G-yG-rb0" eventType="touchUpInside" id="84r-P5-xgI"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.3737792969" green="1" blue="0.94268120659999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="qE1-cT-8yZ" firstAttribute="leading" secondItem="P3c-Gs-e7R" secondAttribute="leadingMargin" id="1ZZ-jp-s8c"/>
+                            <constraint firstItem="qE1-cT-8yZ" firstAttribute="top" secondItem="nYx-e6-UgE" secondAttribute="bottom" constant="8" id="V4N-qe-TmF"/>
+                            <constraint firstItem="qE1-cT-8yZ" firstAttribute="trailing" secondItem="P3c-Gs-e7R" secondAttribute="trailingMargin" id="gF8-jY-cpZ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Pqb-Dw-Uh6">
                         <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="3nU-Ww-woA">
@@ -311,12 +339,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Enter your link here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
-                                <rect key="frame" x="16" y="72" width="343" height="127"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Enter your link here" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
+                                <rect key="frame" x="16" y="72" width="343" height="107"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                             </textView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="47V-5t-mOp">
                                 <rect key="frame" x="16" y="207" width="343" height="452"/>
@@ -385,6 +414,7 @@
     <resources>
         <image name="List" width="32" height="32"/>
         <image name="Map" width="32" height="32"/>
+        <image name="Pin" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="8dw-UN-NuC"/>
