@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C2013441E97321100A79ECF /* AllertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2013431E97321100A79ECF /* AllertViewController.swift */; };
+		9C2013461E97392100A79ECF /* AppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C2013451E97392100A79ECF /* AppExtension.swift */; };
 		9C415AAF1E8E2B19008CE766 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAB1E8E2B19008CE766 /* Bolts.framework */; };
 		9C415AB01E8E2B19008CE766 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAC1E8E2B19008CE766 /* FBSDKCoreKit.framework */; };
 		9C415AB11E8E2B19008CE766 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAD1E8E2B19008CE766 /* FBSDKLoginKit.framework */; };
@@ -28,6 +30,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9C2013431E97321100A79ECF /* AllertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllertViewController.swift; sourceTree = "<group>"; };
+		9C2013451E97392100A79ECF /* AppExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppExtension.swift; sourceTree = "<group>"; };
 		9C415AAB1E8E2B19008CE766 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		9C415AAC1E8E2B19008CE766 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9C415AAD1E8E2B19008CE766 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 			children = (
 				9C8356141E8738D000522471 /* AppDelegate.swift */,
 				9CFD6A981E88A72E00DE42B7 /* GCDBlackBox.swift */,
+				9C2013451E97392100A79ECF /* AppExtension.swift */,
 				9C8356281E873A8300522471 /* Controller */,
 				9C8356271E873A7100522471 /* Model */,
 				9C8356261E873A6100522471 /* View */,
@@ -131,6 +136,7 @@
 				9C94B3EF1E8B44790026ABA8 /* AnnotationsTableViewController.swift */,
 				9C94B3F11E8B4AC40026ABA8 /* ChooseLocationViewController.swift */,
 				9C94B3F31E8B5E150026ABA8 /* PostLocationViewController.swift */,
+				9C2013431E97321100A79ECF /* AllertViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -241,9 +247,11 @@
 				9C94B3F01E8B44790026ABA8 /* AnnotationsTableViewController.swift in Sources */,
 				9CFD6A9B1E88AEC100DE42B7 /* MapViewController.swift in Sources */,
 				9C8356151E8738D000522471 /* AppDelegate.swift in Sources */,
+				9C2013461E97392100A79ECF /* AppExtension.swift in Sources */,
 				9CFD6A971E887A4C00DE42B7 /* UdacityLoginViewController.swift in Sources */,
 				9CFD6A991E88A72E00DE42B7 /* GCDBlackBox.swift in Sources */,
 				9C94B3F41E8B5E150026ABA8 /* PostLocationViewController.swift in Sources */,
+				9C2013441E97321100A79ECF /* AllertViewController.swift in Sources */,
 				9CFD6A9D1E88E1CA00DE42B7 /* UdacityConvenience.swift in Sources */,
 				9C94B3F21E8B4AC40026ABA8 /* ChooseLocationViewController.swift in Sources */,
 				9C83562D1E873E6000522471 /* UdacityClient.swift in Sources */,

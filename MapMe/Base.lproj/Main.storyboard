@@ -24,35 +24,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="8Co-5T-aje">
-                                <rect key="frame" x="67.5" y="264" width="240" height="121.5"/>
+                                <rect key="frame" x="67.5" y="264" width="240" height="122"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="kirill.kudymov@gmail.com" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dhx-cv-bfh">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.97647058823529409" green="0.96078431372549022" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Vasia123" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="euh-d8-zJi">
                                         <rect key="frame" x="0.0" y="46" width="240" height="30"/>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.97647058823529409" green="0.96078431372549022" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ibw-3Y-PWH">
-                                        <rect key="frame" x="0.0" y="92" width="240" height="29.5"/>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal">
-                                            <attributedString key="attributedTitle">
-                                                <fragment content="Login">
-                                                    <attributes>
-                                                        <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <font key="NSFont" size="15" name="Calibri"/>
-                                                        <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                    </attributes>
-                                                </fragment>
-                                            </attributedString>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ibw-3Y-PWH">
+                                        <rect key="frame" x="0.0" y="92" width="240" height="30"/>
+                                        <color key="backgroundColor" red="0.29593834280967712" green="0.70556354522705078" blue="0.89739853143692017" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Calibri" family="Calibri" pointSize="15"/>
+                                        <state key="normal" title="Login with Udacity">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
                                             <action selector="udacityLogin:" destination="tzB-8p-NDt" eventType="touchUpInside" id="DSs-me-WnZ"/>
@@ -64,7 +57,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bl0-IW-dJH" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="67" y="525.5" width="240" height="30"/>
+                                <rect key="frame" x="67" y="526" width="240" height="30"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="EWp-h8-Wen"/>
@@ -83,7 +76,7 @@
                                 <rect key="frame" x="177" y="323" width="20" height="20"/>
                             </activityIndicatorView>
                         </subviews>
-                        <color key="backgroundColor" red="0.373779296875" green="1" blue="0.94268120659722221" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.68424499034881592" green="0.88353359699249268" blue="0.95911616086959839" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="bl0-IW-dJH" firstAttribute="top" secondItem="8Co-5T-aje" secondAttribute="bottom" constant="140" id="7y7-KR-baw"/>
                             <constraint firstItem="vGm-jh-MdM" firstAttribute="centerX" secondItem="GH0-WL-Rfz" secondAttribute="centerX" id="EEh-Lq-hC7"/>
@@ -99,6 +92,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="GQN-44-Bnh" id="2kw-7G-4wR"/>
                         <outlet property="fbLoginButton" destination="bl0-IW-dJH" id="bF9-Rj-KFE"/>
+                        <outlet property="udacityLoginButton" destination="ibw-3Y-PWH" id="cXg-Lm-e9n"/>
                         <outlet property="userEmail" destination="Dhx-cv-bfh" id="c0D-Ie-WW2"/>
                         <outlet property="userPassword" destination="euh-d8-zJi" id="Y9E-yO-AJH"/>
                         <segue destination="D9h-jw-spg" kind="presentation" identifier="userAuthorized" id="rcB-Ay-IMH"/>
@@ -434,6 +428,6 @@
         <image name="Pin" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="j6o-r6-VnI"/>
+        <segue reference="8dw-UN-NuC"/>
     </inferredMetricsTieBreakers>
 </document>
