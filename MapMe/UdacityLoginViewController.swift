@@ -72,7 +72,7 @@ class UdacityLoginViewController: UIViewController {
                     performUIUpdatesOnMain {
                         self.activityIndicator.stopAnimating()
                         self.interfaceDimmed(false)
-                        AllertViewController.showAlertWithTitle("Students Data", message: "Cannot download students locations")
+                        AllertViewController.showAlertWithTitle("Students Data", message: "Cannot download students' locations")
                     }
                     return
                 }

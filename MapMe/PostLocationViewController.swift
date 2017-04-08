@@ -47,6 +47,9 @@ class PostLocationViewController: UIViewController {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, radius * 2.0, radius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
+    
+    
+    // MARK: Actions
 
     @IBAction func postLocation(_ sender: UIButton) {
         
@@ -54,14 +57,12 @@ class PostLocationViewController: UIViewController {
         let longitude = studyLocation.coordinate.longitude
         let student = Student(uniqueKey: user.uniqueKey, firstName: user.firstName, lastName: user.lastName, mapString: userAddress, mediaURL: linkTextView.text!, latitude: latitude, longitude: longitude)
         
-//        print(student)
-        
         UdacityClient.sharedInstance().postStudentLocationFor(student: student) { objectId, error in
             
             performUIUpdatesOnMain {
                 self.navigationController?.popViewController(animated: true)
             }
         }
-        
     }
+    
 }

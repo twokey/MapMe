@@ -167,7 +167,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Student Locations" id="wND-L0-cYm">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="sDj-kZ-VHT"/>
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="sDj-kZ-VHT">
+                            <connections>
+                                <action selector="logout:" destination="iy2-pq-7Jw" id="sFa-zH-kE4"/>
+                            </connections>
+                        </barButtonItem>
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="wHc-nX-TIH">
                                 <connections>
@@ -220,7 +224,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Pin" id="W5t-mO-m2G">
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" image="Pin" id="W5t-mO-m2G">
                                             <rect key="frame" x="15" y="10" width="32" height="32"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
@@ -266,14 +270,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-cT-8yZ">
-                                <rect key="frame" x="16" y="72" width="343" height="239"/>
+                                <rect key="frame" x="16" y="72" width="343" height="183"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqn-dD-CAW">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="27"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="21"/>
                                         <attributedString key="attributedText">
                                             <fragment content="Where are you studying today?">
                                                 <attributes>
-                                                    <font key="NSFont" metaFont="system" size="23"/>
+                                                    <font key="NSFont" size="18" name="HelveticaNeue"/>
                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
@@ -281,19 +285,21 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Address Here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wqq-RO-bVW">
-                                        <rect key="frame" x="0.0" y="43" width="343" height="150"/>
+                                        <rect key="frame" x="0.0" y="37" width="343" height="100"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="fbt-sp-25C"/>
+                                            <constraint firstAttribute="height" constant="100" id="fbt-sp-25C"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <dataDetectorType key="dataDetectorTypes" address="YES"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKF-7q-Biz">
-                                        <rect key="frame" x="0.0" y="209" width="343" height="30"/>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Find on the Map"/>
+                                        <rect key="frame" x="0.0" y="153" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.29411764709999999" green="0.70588235290000001" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Find on the Map">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="geocodeForward:" destination="m5G-yG-rb0" eventType="touchUpInside" id="84r-P5-xgI"/>
                                         </connections>
@@ -301,7 +307,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.3737792969" green="1" blue="0.94268120659999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.68424499029999997" green="0.883533597" blue="0.95911616089999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qE1-cT-8yZ" firstAttribute="leading" secondItem="P3c-Gs-e7R" secondAttribute="leadingMargin" id="1ZZ-jp-s8c"/>
                             <constraint firstItem="qE1-cT-8yZ" firstAttribute="top" secondItem="nYx-e6-UgE" secondAttribute="bottom" constant="8" id="V4N-qe-TmF"/>
@@ -339,34 +345,43 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wRf-Eg-2dl">
                                 <rect key="frame" x="16" y="72" width="343" height="595"/>
                                 <subviews>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter your link here" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="107"/>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" usesAttributedText="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="107" id="XDX-Xo-MsX"/>
+                                            <constraint firstAttribute="height" constant="50" id="XDX-Xo-MsX"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <attributedString key="attributedText">
+                                            <fragment content="Enter your link here">
+                                                <attributes>
+                                                    <font key="NSFont" size="14" name=".AppleSystemUIFont"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
                                         <textInputTraits key="textInputTraits"/>
                                         <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBb-D2-0IP">
-                                        <rect key="frame" x="0.0" y="123" width="343" height="40"/>
-                                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="0.0" y="66" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.29411764709999999" green="0.70588235290000001" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="bEF-gz-h7W"/>
+                                            <constraint firstAttribute="height" constant="30" id="lAh-sY-Y97"/>
                                         </constraints>
-                                        <state key="normal" title="Post Location"/>
+                                        <state key="normal" title="Post Location">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
                                         <connections>
                                             <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="mIW-lf-ES1"/>
                                         </connections>
                                     </button>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="47V-5t-mOp">
-                                        <rect key="frame" x="0.0" y="179" width="343" height="416"/>
+                                        <rect key="frame" x="0.0" y="112" width="343" height="483"/>
                                     </mapView>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.3737792969" green="1" blue="0.94268120659999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.68424499029999997" green="0.883533597" blue="0.95911616089999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wRf-Eg-2dl" firstAttribute="leading" secondItem="bMJ-sO-TbR" secondAttribute="leadingMargin" id="3DF-5w-IW3"/>
                             <constraint firstItem="wRf-Eg-2dl" firstAttribute="trailing" secondItem="bMJ-sO-TbR" secondAttribute="trailingMargin" id="4Fk-sp-e01"/>
@@ -374,9 +389,7 @@
                             <constraint firstItem="wRf-Eg-2dl" firstAttribute="top" secondItem="D4A-yU-1uF" secondAttribute="bottom" constant="8" id="bB8-ZC-MF2"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="o1q-7y-66b">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="KnB-W9-6wN"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="o1q-7y-66b"/>
                     <connections>
                         <outlet property="linkTextView" destination="8Zc-Ln-l1V" id="b1T-1r-VMP"/>
                         <outlet property="mapView" destination="47V-5t-mOp" id="BjF-ZE-elM"/>
@@ -428,6 +441,6 @@
         <image name="Pin" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8dw-UN-NuC"/>
+        <segue reference="j6o-r6-VnI"/>
     </inferredMetricsTieBreakers>
 </document>

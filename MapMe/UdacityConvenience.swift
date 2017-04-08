@@ -103,6 +103,7 @@ extension UdacityClient {
         }
     }
 
+    // Login with Udacity credentials
     func getUdacityStudentIDforUser(_ userName: String, userPassword: String, completionHandlerForSessionID: @escaping (_ studentID: String?, _ error: NSError?) -> Void) {
         
         let method = "/session"
@@ -147,6 +148,63 @@ extension UdacityClient {
             completionHandlerForSessionID(studentID, nil)
         }
     }
+    
+    // Logut with Udacity credentials
+    func logoutUdacitySession(_ completionHandlerForSessionID: @escaping (_ result: String?, _ error: NSError?) -> Void) {
+        
+        let method = "/session"
+        let url = udacityURLFromParameters([:], withPathExtension: method)
+        
+//        let jsonBody = "{\"udacity\": {\"username\": \"\(userName)\", \"password\": \"\(userPassword)\"}}"
+        
+        let request = NSMutableURLRequest(url: url)
+        request.httpMethod = "DELETE"
+        //request.addValue("application/json", forHTTPHeaderField: "Accept")
+        //request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        //request.httpBody = jsonBody.data(using: String.Encoding.utf8)
+        
+        var xsrfCookie: HTTPCookie? = nil
+        let sharedCookieStorage = HTTPCookieStorage.shared
+        for cookie in sharedCookieStorage.cookies! {
+            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+        }
+        
+        if let xsrfCookie = xsrfCookie {
+            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+        }
+        
+        let _ = UdacityClient.sharedInstance().taskForUdacityPOSTRequest(request) { (parsedResult, error) in
+            
+            func sendError(_ error: String) {
+                print(error)
+                let userInfo = [NSLocalizedDescriptionKey: error]
+                completionHandlerForSessionID(nil, NSError(domain: "getUdacitySessionIDforUser", code: 1, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError("There was an error with your request: \(error)")
+                return
+            }
+            
+            guard let parsedResult = parsedResult as? NSDictionary else {
+                sendError("No parsed result was returned")
+                return
+            }
+            
+            guard let accountDictionary = parsedResult[UdacityClient.JSONResponseKeys.session] as? NSDictionary else {
+                sendError("Logout failed no JSON key found: \(UdacityClient.JSONResponseKeys.session)")
+                return
+            }
+            
+            guard let sessionId = accountDictionary[UdacityClient.JSONResponseKeys.id] as? String else {
+                sendError("Logout failed no JSON key found: \(UdacityClient.JSONResponseKeys.id)")
+                return
+            }
+            
+            completionHandlerForSessionID(sessionId, nil)
+        }
+    }
+
     
     func getStudents(_ completionHandlerForStudentLocations: @escaping (_ students: [Student]?, _ errorString: NSError?) -> Void) {
         
