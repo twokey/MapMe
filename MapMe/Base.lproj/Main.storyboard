@@ -101,8 +101,12 @@
                         <constraints>
                             <constraint firstItem="vGm-jh-MdM" firstAttribute="centerX" secondItem="GH0-WL-Rfz" secondAttribute="centerX" id="EEh-Lq-hC7"/>
                             <constraint firstItem="GQN-44-Bnh" firstAttribute="centerX" secondItem="GH0-WL-Rfz" secondAttribute="centerX" id="GMO-n5-2pP"/>
-                            <constraint firstItem="FxD-nQ-OGr" firstAttribute="top" secondItem="bl0-IW-dJH" secondAttribute="bottom" constant="30" id="K5n-IU-0ap"/>
-                            <constraint firstItem="vGm-jh-MdM" firstAttribute="top" secondItem="UJT-IE-gbX" secondAttribute="bottom" constant="80" id="MoP-zc-P00"/>
+                            <constraint firstItem="FxD-nQ-OGr" firstAttribute="top" secondItem="bl0-IW-dJH" secondAttribute="bottom" constant="30" id="K5n-IU-0ap">
+                                <variation key="heightClass=compact-widthClass=compact" constant="10"/>
+                            </constraint>
+                            <constraint firstItem="vGm-jh-MdM" firstAttribute="top" secondItem="UJT-IE-gbX" secondAttribute="bottom" constant="80" id="MoP-zc-P00">
+                                <variation key="heightClass=compact-widthClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="GQN-44-Bnh" firstAttribute="centerY" secondItem="GH0-WL-Rfz" secondAttribute="centerY" id="ayG-Gu-Grj"/>
                             <constraint firstItem="8Co-5T-aje" firstAttribute="top" secondItem="vGm-jh-MdM" secondAttribute="bottom" constant="20" id="b7S-V6-dBG"/>
                             <constraint firstItem="bl0-IW-dJH" firstAttribute="centerX" secondItem="GH0-WL-Rfz" secondAttribute="centerX" id="d1U-Zd-auD"/>
@@ -373,47 +377,55 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wRf-Eg-2dl">
                                 <rect key="frame" x="16" y="72" width="343" height="595"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVx-Tl-TMx">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="24"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="24" id="6Lg-h1-wvp"/>
-                                        </constraints>
-                                        <attributedString key="attributedText">
-                                            <fragment content="What would you like to share?">
-                                                <attributes>
-                                                    <font key="NSFont" size="18" name="HelveticaNeue"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" text="Enter your link here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
-                                        <rect key="frame" x="0.0" y="40" width="343" height="100"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="100" id="XDX-Xo-MsX"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                        <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                    </textView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBb-D2-0IP">
-                                        <rect key="frame" x="0.0" y="156" width="343" height="30"/>
-                                        <color key="backgroundColor" red="0.29411764709999999" green="0.70588235290000001" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="lAh-sY-Y97"/>
-                                        </constraints>
-                                        <state key="normal" title="Post Location">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="mIW-lf-ES1"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hrV-dW-chL">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="170"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVx-Tl-TMx">
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="24"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="24" id="6Lg-h1-wvp"/>
+                                                </constraints>
+                                                <attributedString key="attributedText">
+                                                    <fragment content="What would you like to share?">
+                                                        <attributes>
+                                                            <font key="NSFont" size="18" name="HelveticaNeue"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" text="Enter your link here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
+                                                <rect key="frame" x="0.0" y="32" width="343" height="100"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="XDX-Xo-MsX">
+                                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                                    </constraint>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                            </textView>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="260" verticalHuggingPriority="260" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBb-D2-0IP">
+                                                <rect key="frame" x="0.0" y="140" width="343" height="30"/>
+                                                <color key="backgroundColor" red="0.29411764709999999" green="0.70588235290000001" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="lAh-sY-Y97"/>
+                                                </constraints>
+                                                <state key="normal" title="Post Location">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="mIW-lf-ES1"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="47V-5t-mOp">
-                                        <rect key="frame" x="0.0" y="202" width="343" height="393"/>
+                                        <rect key="frame" x="0.0" y="186" width="343" height="409"/>
                                     </mapView>
                                 </subviews>
+                                <variation key="heightClass=compact-widthClass=compact" alignment="top" axis="horizontal"/>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.68424499029999997" green="0.883533597" blue="0.95911616089999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -472,7 +484,7 @@
     </scenes>
     <resources>
         <image name="List" width="32" height="32"/>
-        <image name="Logo" width="269" height="72"/>
+        <image name="Logo" width="270" height="85"/>
         <image name="Map" width="32" height="32"/>
         <image name="Pin" width="32" height="32"/>
     </resources>
