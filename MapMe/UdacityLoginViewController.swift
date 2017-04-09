@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import SafariServices
 import FBSDKLoginKit
 
 class UdacityLoginViewController: UIViewController {
@@ -40,6 +41,9 @@ class UdacityLoginViewController: UIViewController {
             fbLoginButton.delegate = self
         }
     }
+    
+    
+    // MARK: Login
     
     func loginWithUserID(_ userID: Int) {
         
@@ -231,6 +235,11 @@ class UdacityLoginViewController: UIViewController {
         }
     }
     
+    @IBAction func udacitySignUp(_ sender: UIButton) {
+        let safaryViewController = SFSafariViewController(url: URL(string: "https://www.udacity.com/account/auth#!/signup")!)
+        present(safaryViewController, animated: true, completion: nil)
+        
+    }
 }
 
 

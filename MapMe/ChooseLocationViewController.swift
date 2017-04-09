@@ -15,6 +15,8 @@ class ChooseLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        addressTextView.delegate = self
 
     }
 
@@ -49,7 +51,15 @@ class ChooseLocationViewController: UIViewController {
         
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
 
+}
+
+    // MARK: - UITextView Delegate
+
+extension ChooseLocationViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.text = ""
+    }
+    
 }

@@ -30,6 +30,8 @@ class PostLocationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        linkTextView.delegate = self
 
     }
     
@@ -60,9 +62,20 @@ class PostLocationViewController: UIViewController {
         UdacityClient.sharedInstance().postStudentLocationFor(student: student) { objectId, error in
             
             performUIUpdatesOnMain {
-                self.navigationController?.popViewController(animated: true)
+                self.parent?.dismiss(animated: true, completion: nil)
+                //self.navigationController?.popViewController(animated: true)
             }
         }
     }
     
+}
+
+
+// MARK: - UITextView Delegate
+
+extension PostLocationViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.text = ""
+    }
 }

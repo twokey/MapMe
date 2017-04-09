@@ -8,6 +8,8 @@
 
 import UIKit
 import MapKit
+import SafariServices
+import FBSDKLoginKit
 
 class AnnotationsTableViewController: UITableViewController {
     
@@ -53,11 +55,74 @@ class AnnotationsTableViewController: UITableViewController {
 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let annotation = annotations[indexPath.row]
+        
+        guard let urlAddress = annotation.subtitle as? String else {
+            AllertViewController.showAlertWithTitle("URL Address", message: "No web address provided")
+            return
+        }
+        
+        var stringAddress = urlAddress
+        
+        if !(urlAddress.contains("https://") || urlAddress.contains("http://")) {
+            stringAddress = "https://" + urlAddress
+        }
+        
+        guard let url = URL(string: stringAddress) else {
+            AllertViewController.showAlertWithTitle("URL Address", message: "URL is not valid")
+            return
+        }
+        
+        let safaryVC = SFSafariViewController(url: url)
+        
+        self.present(safaryVC, animated: true, completion: nil)
+        
+    }
+    
+    
+    // MARK: Actions
 
+    @IBAction func logout(_ sender: UIBarButtonItem) {
+
+        // Logout from Facebook
+        FBSDKLoginManager().logOut()
+        
+        // Logout from Udacity
+        // Setup UI; Dim background
+        activityIndicator.startAnimating()
+        tableView.alpha = 0.5
+        UdacityClient.sharedInstance().logoutUdacitySession() { sessionId, error in
+            
+            guard (error == nil) else {
+                print(error ?? "Error was not provided")
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.tableView.alpha = 1.0
+                    AllertViewController.showAlertWithTitle("Logout failed", message: "Couldn't logout. Please try again")
+                }
+                return
+            }
+            
+            if let sessionId = sessionId {
+                self.dismiss(animated: true, completion: nil)
+            } else {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.tableView.alpha = 1.0
+                    AllertViewController.showAlertWithTitle("Logout failed", message: "Couldn't logout. Unexpected response. Please try again")
+                }
+            }
+        }
+    }
+    
     @IBAction func reloadStudentConnections(_ sender: UIBarButtonItem) {
         
-        // Setup UI
+        // Setup UI; dim background
         activityIndicator.startAnimating()
+        tableView.alpha = 0.5
+
         
         // Get student's locations and links
         UdacityClient.sharedInstance().getStudents() { students, error in
@@ -96,6 +161,7 @@ class AnnotationsTableViewController: UITableViewController {
             // We have user data, students data (annotations) we can continue to map VC
             performUIUpdatesOnMain {
                 self.activityIndicator.stopAnimating()
+                self.tableView.alpha = 1.0
                 self.tableView.reloadData()
             }
         }

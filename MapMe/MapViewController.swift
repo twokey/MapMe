@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import SafariServices
+import FBSDKLoginKit
 
 class MapViewController: UIViewController {
 
@@ -115,10 +116,16 @@ class MapViewController: UIViewController {
         }
     }
     
+    
+    // MARK: Actions
+    
     @IBAction func logout(_ sender: UIBarButtonItem) {
         
-        activityIndicator.startAnimating()
         
+        FBSDKLoginManager().logOut()
+        
+        // Setup UI; Dim background
+        activityIndicator.startAnimating()
         let dimView = UIView()
         dimView.backgroundColor = UIColor.black
         dimView.alpha = 0.5
@@ -149,7 +156,11 @@ class MapViewController: UIViewController {
         }
     }
     
+    
+    
 }
+
+    // MARK: - MapView Delegatedd
 
 extension MapViewController: MKMapViewDelegate {
     
@@ -171,9 +182,9 @@ extension MapViewController: MKMapViewDelegate {
             return
         }
         
-        let safaryVC = SFSafariViewController(url: url)
+        let safaryViewController = SFSafariViewController(url: url)
         
-        self.present(safaryVC, animated: true, completion: nil)
+        self.present(safaryViewController, animated: true, completion: nil)
         
     }
     
