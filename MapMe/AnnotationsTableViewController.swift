@@ -12,6 +12,7 @@ import SafariServices
 import FBSDKLoginKit
 
 class AnnotationsTableViewController: UITableViewController {
+  
     
     // MARK: Properties
     
@@ -21,6 +22,7 @@ class AnnotationsTableViewController: UITableViewController {
     
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
 
+    
     // MARK: Lifecycle
     
     override func viewDidLoad() {
@@ -47,7 +49,7 @@ class AnnotationsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnnotationCellReuseIdentifier", for: indexPath)
 
-        // Configure the cell...
+        // Configure the cell
         let annotation = annotations[indexPath.row]
         
         cell.textLabel?.text = annotation.title!
@@ -75,9 +77,9 @@ class AnnotationsTableViewController: UITableViewController {
             return
         }
         
-        let safaryVC = SFSafariViewController(url: url)
+        let safaryViewController = SFSafariViewController(url: url)
         
-        self.present(safaryVC, animated: true, completion: nil)
+        self.present(safaryViewController, animated: true, completion: nil)
         
     }
     

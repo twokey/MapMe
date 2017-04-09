@@ -98,6 +98,7 @@ class UdacityLoginViewController: UIViewController {
                     let lat = CLLocationDegrees(studentLat)
                     let long = CLLocationDegrees(studentLong)
                     let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    let uniqueKey = student.uniqueKey ?? ""
 
                     let first = student.firstName ?? ""
                     let last = student.lastName ?? ""
@@ -243,7 +244,7 @@ class UdacityLoginViewController: UIViewController {
 }
 
 
-    // MARK: FBSDK delegate
+    // MARK: - FBSDK Delegate
 
 extension UdacityLoginViewController: FBSDKLoginButtonDelegate {
     
@@ -254,16 +255,5 @@ extension UdacityLoginViewController: FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
 
     }
-    
-    func logUserData() {
-        let graphRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
-        graphRequest?.start() { connection, result, error in
-            if error != nil {
-                print(error ?? "Error was not provided")
-            } else {
-               print(result ?? "No result provided")
-            }
-        }
-    }
-    
+        
 }

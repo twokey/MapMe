@@ -11,10 +11,12 @@ import MapKit
 
 class PostLocationViewController: UIViewController {
     
+    
     // MARK: Outlets
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var linkTextView: UITextView!
+    
     
     // MARK: Properties
     
@@ -39,13 +41,13 @@ class PostLocationViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // Set location of study address
-        let regionRadius: CLLocationDistance = 1000
-        centerMapOnLocation(studyLocation, radius: regionRadius)
+        centerMapOnLocation(studyLocation)
     }
+    
     
     // MARK: Helpers
     
-    private func centerMapOnLocation(_ location: CLLocation, radius: CLLocationDistance) {
+    private func centerMapOnLocation(_ location: CLLocation, radius: CLLocationDistance = 1000) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, radius * 2.0, radius * 2.0)
         mapView.setRegion(coordinateRegion, animated: true)
     }
@@ -62,8 +64,13 @@ class PostLocationViewController: UIViewController {
         UdacityClient.sharedInstance().postStudentLocationFor(student: student) { objectId, error in
             
             performUIUpdatesOnMain {
-                self.parent?.dismiss(animated: true, completion: nil)
-                //self.navigationController?.popViewController(animated: true)
+                
+                let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (action) in
+                    self.parent?.dismiss(animated: true, completion: nil)
+                }
+                let alert = UIAlertController(title: "New Location", message: "New study location has been submited successfuly", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(okAction)
+                UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
             }
         }
     }

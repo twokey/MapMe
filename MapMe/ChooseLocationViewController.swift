@@ -11,13 +11,18 @@ import CoreLocation
 
 class ChooseLocationViewController: UIViewController {
 
+    
+    // MARK: Outlets
+    
     @IBOutlet weak var addressTextView: UITextView!
+    
+    
+    // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addressTextView.delegate = self
-
     }
 
     
@@ -31,6 +36,8 @@ class ChooseLocationViewController: UIViewController {
         geocoder.geocodeAddressString(userAddress) {placemarks, error in
             
             guard let placemarks = placemarks, placemarks.count > 0 else {
+                
+                AllertViewController.showAlertWithTitle("Location", message: "Location was not identified")
                 return
             }
 
@@ -46,6 +53,8 @@ class ChooseLocationViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: Actions
     
     @IBAction func dismissViewController(_ sender: UIBarButtonItem) {
         
