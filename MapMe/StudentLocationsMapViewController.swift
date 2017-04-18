@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  StudentLocationsMapViewController.swift
 //  MapMe
 //
 //  Created by Kirill Kudymov on 2017-03-26.
@@ -11,7 +11,7 @@ import MapKit
 import SafariServices
 import FBSDKLoginKit
 
-class MapViewController: UIViewController {
+class StudentLocationsMapViewController: UIViewController {
 
     
     // MARK: Outlets
@@ -49,20 +49,16 @@ class MapViewController: UIViewController {
         // Setup UI
         activityIndicator.startAnimating()
         mapView.removeAnnotations(mapView.annotations)
-        let dimView = UIView()
-        dimView.backgroundColor = UIColor.black
-        dimView.alpha = 0.5
-        dimView.frame = mapView.frame
-        view.addSubview(dimView)
+        mapView.alpha = 0.5
         
         // Get student's locations and links
-        UdacityClient.sharedInstance().getStudents() { students, error in
+        UdacityClient.sharedInstance.getStudents() { students, error in
             
             guard (error == nil) else {
                 print(error ?? "Error was not provided")
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
-                    dimView.removeFromSuperview()
+                    self.mapView.alpha = 1.0
                     self.mapView.addAnnotations(self.annotations)
                     AllertViewController.showAlertWithTitle("Students Data", message: "Cannot download students' locations. Try again")
                 }
@@ -77,7 +73,7 @@ class MapViewController: UIViewController {
             guard let students = students else {
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
-                    dimView.removeFromSuperview()
+                    self.mapView.alpha = 1.0
                     AllertViewController.showAlertWithTitle("Students Data", message: "Cannot download students locations")
                 }
                 return
@@ -109,7 +105,7 @@ class MapViewController: UIViewController {
             // We have students data (annotations) update annotations
             performUIUpdatesOnMain {
                 self.activityIndicator.stopAnimating()
-                dimView.removeFromSuperview()
+                self.mapView.alpha = 1.0
                 self.mapView.addAnnotations(self.annotations)
 
             }
@@ -132,7 +128,7 @@ class MapViewController: UIViewController {
         dimView.frame = mapView.frame
         view.addSubview(dimView)
         
-        UdacityClient.sharedInstance().logoutUdacitySession() { sessionId, error in
+        UdacityClient.sharedInstance.logoutUdacitySession() { sessionId, error in
             
             guard (error == nil) else {
                 print(error ?? "Error was not provided")
@@ -156,13 +152,11 @@ class MapViewController: UIViewController {
         }
     }
     
-    
-    
 }
 
     // MARK: - MapView Delegatedd
 
-extension MapViewController: MKMapViewDelegate {
+extension StudentLocationsMapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped: UIControl) {
         
@@ -177,14 +171,11 @@ extension MapViewController: MKMapViewDelegate {
             stringAddress = "https://" + urlAddress
         }
         
-        guard let url = URL(string: stringAddress) else {
+        if let url = URL(string: stringAddress) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
             AllertViewController.showAlertWithTitle("URL Address", message: "URL is not valid")
-            return
         }
-        
-        let safaryViewController = SFSafariViewController(url: url)
-        
-        self.present(safaryViewController, animated: true, completion: nil)
         
     }
     

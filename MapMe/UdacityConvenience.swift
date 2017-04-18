@@ -23,7 +23,7 @@ extension UdacityClient {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         
-        let _ = UdacityClient.sharedInstance().taskForUdacityPOSTRequest(request) { (parsedResult, error) in
+        let _ = UdacityClient.sharedInstance.taskForUdacityPOSTRequest(request) { (parsedResult, error) in
             
             func sendError(_ error: String) {
                 print(error)
@@ -32,7 +32,7 @@ extension UdacityClient {
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -63,7 +63,7 @@ extension UdacityClient {
 
         let request = NSMutableURLRequest(url: url)
         
-        let _ = UdacityClient.sharedInstance().taskForUdacityPOSTRequest(request) { (parsedResult, error) in
+        let _ = UdacityClient.sharedInstance.taskForUdacityPOSTRequest(request) { (parsedResult, error) in
             
             func sendError(_ error: String) {
                 print(error)
@@ -71,7 +71,7 @@ extension UdacityClient {
                 completionHandlerForUserPublicData(nil, NSError(domain: "getUdacityUserPublicData", code: 1, userInfo: userInfo))
             }
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -117,7 +117,7 @@ extension UdacityClient {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         
-        let _ = UdacityClient.sharedInstance().taskForUdacityPOSTRequest(request) { (parsedResult, error) in
+        let _ = UdacityClient.sharedInstance.taskForUdacityPOSTRequest(request) { (parsedResult, error) in
             
             func sendError(_ error: String) {
                 print(error)
@@ -126,7 +126,7 @@ extension UdacityClient {
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -173,7 +173,7 @@ extension UdacityClient {
             request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
         
-        let _ = UdacityClient.sharedInstance().taskForUdacityPOSTRequest(request) { (parsedResult, error) in
+        let _ = UdacityClient.sharedInstance.taskForUdacityPOSTRequest(request) { (parsedResult, error) in
             
             func sendError(_ error: String) {
                 print(error)
@@ -182,7 +182,7 @@ extension UdacityClient {
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -214,7 +214,7 @@ extension UdacityClient {
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         
-        let _ = UdacityClient.sharedInstance().taskForParseGETRequest(request) { (parsedResult, error) in
+        let _ = UdacityClient.sharedInstance.taskForParseGETRequest(request) { (parsedResult, error) in
             
             func sendError(_ error: String) {
                 print(error)
@@ -223,7 +223,7 @@ extension UdacityClient {
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             
@@ -289,7 +289,7 @@ extension UdacityClient {
         print("httpBody = \(httpBodyForPostStudentLocation(student))")
         print("request= \(request)")
         
-        let _ = UdacityClient.sharedInstance().taskForParseGETRequest(request) { (parsedResult, error) in
+        let _ = UdacityClient.sharedInstance.taskForParseGETRequest(request) { (parsedResult, error) in
             
             func sendError(_ error: String) {
                 print(error)
@@ -298,7 +298,7 @@ extension UdacityClient {
             }
             
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error)")
+                sendError("There was an error with your request: \(error!)")
                 return
             }
             

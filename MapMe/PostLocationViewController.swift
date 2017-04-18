@@ -61,7 +61,7 @@ class PostLocationViewController: UIViewController {
         let longitude = studyLocation.coordinate.longitude
         let student = Student(uniqueKey: user.uniqueKey, firstName: user.firstName, lastName: user.lastName, mapString: userAddress, mediaURL: linkTextView.text!, latitude: latitude, longitude: longitude)
         
-        UdacityClient.sharedInstance().postStudentLocationFor(student: student) { objectId, error in
+        UdacityClient.sharedInstance.postStudentLocationFor(student: student) { objectId, error in
             
             performUIUpdatesOnMain {
                 

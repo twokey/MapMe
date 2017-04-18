@@ -48,4 +48,19 @@ struct Student {
         self.updatedAt = updatedAt
     }
     
+    init (_ studentInformation: [String: AnyObject?]) {
+        
+        self.objectId = studentInformation[UdacityClient.JSONResponseKeys.objectId] as? String
+        self.uniqueKey = studentInformation[UdacityClient.JSONResponseKeys.uniqueKey] as? String
+        self.firstName = studentInformation[UdacityClient.JSONResponseKeys.firstName] as? String
+        self.lastName = studentInformation[UdacityClient.JSONResponseKeys.lastName] as? String
+        self.mapString = studentInformation[UdacityClient.JSONResponseKeys.mapString] as? String
+        self.mediaURL = studentInformation[UdacityClient.JSONResponseKeys.mediaURL] as? String
+        self.latitude = studentInformation[UdacityClient.JSONResponseKeys.latitude] as? Double
+        self.longitude = studentInformation[UdacityClient.JSONResponseKeys.longitude] as? Double
+        self.createdAt = studentInformation[UdacityClient.JSONResponseKeys.createdAt] as? String
+        self.updatedAt = studentInformation[UdacityClient.JSONResponseKeys.updatedAt] as? String
+        
+    }
+    
 }

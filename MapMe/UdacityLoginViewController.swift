@@ -52,7 +52,7 @@ class UdacityLoginViewController: UIViewController {
         
         
         // Login with user ID
-        UdacityClient.sharedInstance().getUdacityUserPublicData(userID) { user, error in
+        UdacityClient.sharedInstance.getUdacityUserPublicData(userID) { user, error in
             
             guard (error == nil) else {
                 print(error ?? "Error was not provided")
@@ -72,7 +72,7 @@ class UdacityLoginViewController: UIViewController {
             }
             
             // Get student's locations and links; We will need them for next VC and a user is waiting anyway
-            UdacityClient.sharedInstance().getStudents() { students, error in
+            UdacityClient.sharedInstance.getStudents() { students, error in
 
                 guard (error == nil) else {
                     print(error ?? "Error was not provided")
@@ -101,7 +101,7 @@ class UdacityLoginViewController: UIViewController {
                     let lat = CLLocationDegrees(studentLat)
                     let long = CLLocationDegrees(studentLong)
                     let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                    let uniqueKey = student.uniqueKey ?? ""
+                   // let uniqueKey = student.uniqueKey ?? ""
 
                     let first = student.firstName ?? ""
                     let last = student.lastName ?? ""
@@ -134,7 +134,7 @@ class UdacityLoginViewController: UIViewController {
         interfaceDimmed(true)
         
         // Get user ID using FB token
-        UdacityClient.sharedInstance().postSessionWithFacebookToken(fbToken) { userID, error in
+        UdacityClient.sharedInstance.postSessionWithFacebookToken(fbToken) { userID, error in
             
             guard (error == nil) else {
                 print(error ?? "Error was not provided")
@@ -212,7 +212,7 @@ class UdacityLoginViewController: UIViewController {
         interfaceDimmed(true)
 
         // Login with Udacity credentials
-        UdacityClient.sharedInstance().getUdacityStudentIDforUser(userName, userPassword: userPassword) { userID, error in
+        UdacityClient.sharedInstance.getUdacityStudentIDforUser(userName, userPassword: userPassword) { userID, error in
             
             guard (error == nil) else {
                 print(error ?? "Error was not provided")

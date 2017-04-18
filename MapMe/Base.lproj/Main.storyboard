@@ -163,7 +163,7 @@
         <!--Student Locations-->
         <scene sceneID="irq-6n-hVm">
             <objects>
-                <viewController id="iy2-pq-7Jw" customClass="MapViewController" customModule="MapMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="iy2-pq-7Jw" customClass="StudentLocationsMapViewController" customModule="MapMe" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ep2-SR-hIS"/>
                         <viewControllerLayoutGuide type="bottom" id="ksW-0z-6gt"/>
@@ -198,7 +198,7 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="wHc-nX-TIH">
                                 <connections>
-                                    <segue destination="J3Q-Hh-Irs" kind="presentation" id="j6o-r6-VnI"/>
+                                    <segue destination="J3Q-Hh-Irs" kind="presentation" identifier="postStudyLocationFromMap" id="j6o-r6-VnI"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="refresh" id="Klx-Zj-3Jm">
@@ -220,7 +220,7 @@
         <!--Student Locations-->
         <scene sceneID="2Fx-AY-Boj">
             <objects>
-                <tableViewController id="A5N-NE-KSC" customClass="AnnotationsTableViewController" customModule="MapMe" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="A5N-NE-KSC" customClass="StudentLocationsTableViewController" customModule="MapMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="54" sectionHeaderHeight="28" sectionFooterHeight="28" id="IqG-VR-0qV">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -269,7 +269,7 @@
                         <rightBarButtonItems>
                             <barButtonItem systemItem="add" id="C3J-n5-qme">
                                 <connections>
-                                    <segue destination="J3Q-Hh-Irs" kind="presentation" id="8dw-UN-NuC"/>
+                                    <segue destination="J3Q-Hh-Irs" kind="presentation" identifier="postStudyLocationFromTable" id="8dw-UN-NuC"/>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem systemItem="refresh" id="saT-f6-Vgt">
@@ -322,7 +322,6 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        <dataDetectorType key="dataDetectorTypes" address="YES"/>
                                     </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKF-7q-Biz">
                                         <rect key="frame" x="0.0" y="156" width="343" height="30"/>
@@ -353,7 +352,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addressTextView" destination="wqq-RO-bVW" id="71z-7g-lWv"/>
-                        <segue destination="oE1-B7-sOv" kind="show" id="afH-6O-boB"/>
+                        <segue destination="oE1-B7-sOv" kind="show" identifier="addResourse" id="afH-6O-boB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7dl-fj-NXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -402,7 +401,6 @@
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
                                                 <textInputTraits key="textInputTraits"/>
-                                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="260" verticalHuggingPriority="260" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBb-D2-0IP">
                                                 <rect key="frame" x="0.0" y="140" width="343" height="30"/>

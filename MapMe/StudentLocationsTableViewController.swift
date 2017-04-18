@@ -1,5 +1,5 @@
 //
-//  AnnotationsTableViewController.swift
+//  StudentLocationsTableViewController.swift
 //  MapMe
 //
 //  Created by Kirill Kudymov on 2017-03-28.
@@ -11,7 +11,7 @@ import MapKit
 import SafariServices
 import FBSDKLoginKit
 
-class AnnotationsTableViewController: UITableViewController {
+class StudentLocationsTableViewController: UITableViewController {
   
     
     // MARK: Properties
@@ -32,7 +32,7 @@ class AnnotationsTableViewController: UITableViewController {
         activityIndicator.center = view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
-        self.navigationController?.view.addSubview(activityIndicator)
+        navigationController?.view.addSubview(activityIndicator)
     }
 
 
@@ -72,15 +72,11 @@ class AnnotationsTableViewController: UITableViewController {
             stringAddress = "https://" + urlAddress
         }
         
-        guard let url = URL(string: stringAddress) else {
+        if let url = URL(string: stringAddress) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
             AllertViewController.showAlertWithTitle("URL Address", message: "URL is not valid")
-            return
         }
-        
-        let safaryViewController = SFSafariViewController(url: url)
-        
-        self.present(safaryViewController, animated: true, completion: nil)
-        
     }
     
     
@@ -95,7 +91,7 @@ class AnnotationsTableViewController: UITableViewController {
         // Setup UI; Dim background
         activityIndicator.startAnimating()
         tableView.alpha = 0.5
-        UdacityClient.sharedInstance().logoutUdacitySession() { sessionId, error in
+        UdacityClient.sharedInstance.logoutUdacitySession() { sessionId, error in
             
             guard (error == nil) else {
                 print(error ?? "Error was not provided")
@@ -127,7 +123,7 @@ class AnnotationsTableViewController: UITableViewController {
 
         
         // Get student's locations and links
-        UdacityClient.sharedInstance().getStudents() { students, error in
+        UdacityClient.sharedInstance.getStudents() { students, error in
             
             // Get reference to app delegate and clean students locations
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
