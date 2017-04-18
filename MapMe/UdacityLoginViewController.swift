@@ -29,6 +29,9 @@ class UdacityLoginViewController: UIViewController {
         // Set up interface
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
+        subscribeToKeyboardNotifications()
+        userPassword.delegate = self
+        userEmail.delegate = self
         
         // Check if logged in with Facebook
         FBSDKProfile.enableUpdates(onAccessTokenChange: true)
@@ -240,6 +243,10 @@ class UdacityLoginViewController: UIViewController {
         let safaryViewController = SFSafariViewController(url: URL(string: "https://www.udacity.com/account/auth#!/signup")!)
         present(safaryViewController, animated: true, completion: nil)
         
+    }
+    
+    deinit {
+        unsubscribeFromKeyboardNotifications()
     }
 }
 

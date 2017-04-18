@@ -13,6 +13,7 @@
 		9C415AB01E8E2B19008CE766 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAC1E8E2B19008CE766 /* FBSDKCoreKit.framework */; };
 		9C415AB11E8E2B19008CE766 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAD1E8E2B19008CE766 /* FBSDKLoginKit.framework */; };
 		9C415AB21E8E2B19008CE766 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C415AAE1E8E2B19008CE766 /* FBSDKShareKit.framework */; };
+		9C45CE6B1EA5ABA00030A526 /* UtilitiesViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C45CE6A1EA5AB9F0030A526 /* UtilitiesViewControllerExtension.swift */; };
 		9C8356151E8738D000522471 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C8356141E8738D000522471 /* AppDelegate.swift */; };
 		9C83561A1E8738D000522471 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C8356181E8738D000522471 /* Main.storyboard */; };
 		9C83561C1E8738D000522471 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C83561B1E8738D000522471 /* Assets.xcassets */; };
@@ -36,6 +37,7 @@
 		9C415AAC1E8E2B19008CE766 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		9C415AAD1E8E2B19008CE766 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		9C415AAE1E8E2B19008CE766 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		9C45CE6A1EA5AB9F0030A526 /* UtilitiesViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtilitiesViewControllerExtension.swift; sourceTree = "<group>"; };
 		9C8356111E8738D000522471 /* MapMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MapMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C8356141E8738D000522471 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9C8356191E8738D000522471 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				9C94B3F11E8B4AC40026ABA8 /* ChooseLocationViewController.swift */,
 				9C94B3F31E8B5E150026ABA8 /* PostLocationViewController.swift */,
 				9C2013431E97321100A79ECF /* AllertViewController.swift */,
+				9C45CE6A1EA5AB9F0030A526 /* UtilitiesViewControllerExtension.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 				9C8356151E8738D000522471 /* AppDelegate.swift in Sources */,
 				9C2013461E97392100A79ECF /* AppExtension.swift in Sources */,
 				9CFD6A971E887A4C00DE42B7 /* UdacityLoginViewController.swift in Sources */,
+				9C45CE6B1EA5ABA00030A526 /* UtilitiesViewControllerExtension.swift in Sources */,
 				9CFD6A991E88A72E00DE42B7 /* GCDBlackBox.swift in Sources */,
 				9C94B3F41E8B5E150026ABA8 /* PostLocationViewController.swift in Sources */,
 				9C2013441E97321100A79ECF /* AllertViewController.swift in Sources */,
