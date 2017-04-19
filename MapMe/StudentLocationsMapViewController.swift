@@ -23,9 +23,9 @@ class StudentLocationsMapViewController: UIViewController {
     // MARK: Properties
     
     var annotations: [MKAnnotation] {
-        return (UIApplication.shared.delegate as! AppDelegate).annotations
-    }    
-    
+        return StudentLocations.sharedInstance.annotations
+    }
+
     
     //MARK: Lifecycle
     
@@ -42,6 +42,7 @@ class StudentLocationsMapViewController: UIViewController {
         
     }
 
+    
     // MARK: Actions
     
     @IBAction func reloadStudentLocations(_ sender: UIBarButtonItem) {
@@ -65,49 +66,24 @@ class StudentLocationsMapViewController: UIViewController {
                 return
             }
             
-            // Get reference to app delegate and clean students locations
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.annotations.removeAll()
-
-
-            guard let students = students else {
+            if let students = students {
+                
+                StudentLocations.sharedInstance.updateStudentLocations(students)
+                // We have students data (annotations) update annotations
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
                     self.mapView.alpha = 1.0
+                    self.mapView.addAnnotations(self.annotations)
+                    
+                }
+             
+            } else {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.mapView.alpha = 1.0
+                    self.mapView.addAnnotations(self.annotations)
                     AllertViewController.showAlertWithTitle("Students Data", message: "Cannot download students locations")
                 }
-                return
-            }
-            
-            for student in students {
-                
-                // Create pin location from student coordinates
-                let studentLat = student.latitude ?? 0
-                let studentLong = student.longitude ?? 0
-                let lat = CLLocationDegrees(studentLat)
-                let long = CLLocationDegrees(studentLong)
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                
-                let first = student.firstName ?? ""
-                let last = student.lastName ?? ""
-                let mediaURL = student.mediaURL ?? ""
-                
-                // Create annotation from student info
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = "\(first) \(last)"
-                annotation.subtitle = mediaURL
-                
-                // Save student information (annotations) in app delegate
-                appDelegate.annotations.append(annotation)
-            }
-            
-            // We have students data (annotations) update annotations
-            performUIUpdatesOnMain {
-                self.activityIndicator.stopAnimating()
-                self.mapView.alpha = 1.0
-                self.mapView.addAnnotations(self.annotations)
-
             }
         }
     }
@@ -140,7 +116,7 @@ class StudentLocationsMapViewController: UIViewController {
                 return
             }
             
-            if let sessionId = sessionId {
+            if let _ = sessionId {
                 self.dismiss(animated: true, completion: nil)
             } else {
                 performUIUpdatesOnMain {
@@ -154,7 +130,8 @@ class StudentLocationsMapViewController: UIViewController {
     
 }
 
-    // MARK: - MapView Delegatedd
+
+// MARK: - MapView Delegatedd
 
 extension StudentLocationsMapViewController: MKMapViewDelegate {
     

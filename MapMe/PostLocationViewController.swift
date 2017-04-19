@@ -19,13 +19,12 @@ class PostLocationViewController: UIViewController {
     
     
     // MARK: Properties
-    
-    var user: Student {
-        return (UIApplication.shared.delegate as! AppDelegate).user
-    }
-    
+
+    var user = UserInformation.sharedInstance.user
     var studyLocation: CLLocation!
     var userAddress: String!
+    
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     
     
     // MARK: LifeCycle
@@ -33,8 +32,12 @@ class PostLocationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Setup UI
         linkTextView.delegate = self
-
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.stopAnimating()
+        navigationController?.view.addSubview(activityIndicator)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -61,16 +64,34 @@ class PostLocationViewController: UIViewController {
         let longitude = studyLocation.coordinate.longitude
         let student = Student(uniqueKey: user.uniqueKey, firstName: user.firstName, lastName: user.lastName, mapString: userAddress, mediaURL: linkTextView.text!, latitude: latitude, longitude: longitude)
         
+        activityIndicator.startAnimating()
+        
         UdacityClient.sharedInstance.postStudentLocationFor(student: student) { objectId, error in
-            
-            performUIUpdatesOnMain {
-                
-                let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (action) in
-                    self.parent?.dismiss(animated: true, completion: nil)
+
+            guard (error == nil) else {
+                print(error ?? "Error was not provided")
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    AllertViewController.showAlertWithTitle("Study Location", message: "Couldn't post student's study location. Please try again")
                 }
-                let alert = UIAlertController(title: "New Location", message: "New study location has been submited successfuly", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(okAction)
-                UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+                return
+            }
+
+            if let _ = objectId {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (action) in
+                        self.parent?.dismiss(animated: true, completion: nil)
+                    }
+                    let alert = UIAlertController(title: "New Location", message: "New study location has been submited successfuly", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(okAction)
+                    UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+                }
+            } else {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    AllertViewController.showAlertWithTitle("Study Location", message: "Couldn't post student's study location. Please try again")
+                }
             }
         }
     }

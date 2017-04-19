@@ -15,8 +15,6 @@ extension UdacityClient {
         let method = "/session"
         let url = udacityURLFromParameters([:], withPathExtension: method)
         let jsonBody = "{\"facebook_mobile\": {\"access_token\": \"\(token)\"}}"
-        print(jsonBody)
-        
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -119,29 +117,29 @@ extension UdacityClient {
         
         let _ = UdacityClient.sharedInstance.taskForUdacityPOSTRequest(request) { (parsedResult, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: String, code: Int) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForSessionID(nil, NSError(domain: "getUdacitySessionIDforUser", code: 1, userInfo: userInfo))
+                completionHandlerForSessionID(nil, NSError(domain: "getUdacitySessionIDforUser", code: code, userInfo: userInfo))
             }
-            
-            guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
+
+            if let error = error {
+                sendError("There was an error with your request: \(error)", code: error.code)
                 return
             }
             
             guard let parsedResult = parsedResult as? NSDictionary else {
-                sendError("No parsed result was returned")
+                sendError("No parsed result was returned", code: 2)
                 return
             }
             
             guard let accountDictionary = parsedResult[UdacityClient.JSONResponseKeys.account] as? NSDictionary else {
-                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.account)")
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.account)", code: 3)
                 return
             }
         
             guard let studentID = accountDictionary[UdacityClient.JSONResponseKeys.key] as? String else {
-                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.id)")
+                sendError("Login Failed no JSON key found: \(UdacityClient.JSONResponseKeys.id)", code: 4)
                 return
             }
             
@@ -155,13 +153,8 @@ extension UdacityClient {
         let method = "/session"
         let url = udacityURLFromParameters([:], withPathExtension: method)
         
-//        let jsonBody = "{\"udacity\": {\"username\": \"\(userName)\", \"password\": \"\(userPassword)\"}}"
-        
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "DELETE"
-        //request.addValue("application/json", forHTTPHeaderField: "Accept")
-        //request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        //request.httpBody = jsonBody.data(using: String.Encoding.utf8)
         
         var xsrfCookie: HTTPCookie? = nil
         let sharedCookieStorage = HTTPCookieStorage.shared
@@ -209,7 +202,9 @@ extension UdacityClient {
     func getStudents(_ completionHandlerForStudentLocations: @escaping (_ students: [Student]?, _ errorString: NSError?) -> Void) {
         
         let method = "/StudentLocation"
-        let url = parseURLFromParameters([:], withPathExtension: method)
+        let params = ["limit": 100, "order": "-updatedAt"] as [String : AnyObject]
+        let url = parseURLFromParameters(params, withPathExtension: method)
+        print(url)
         let request = NSMutableURLRequest(url: url)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
@@ -219,7 +214,7 @@ extension UdacityClient {
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForStudentLocations(nil, NSError(domain: "getStudents", code: 1, userInfo: userInfo))
+                completionHandlerForStudentLocations(nil, NSError(domain: "getStudents", code: 999, userInfo: userInfo))
             }
             
             guard (error == nil) else {
@@ -276,25 +271,18 @@ extension UdacityClient {
         
         let method = "/StudentLocation"
         let url = parseURLFromParameters([:], withPathExtension: method)
-        
-        print("url= \(url)")
-        
         let request = NSMutableURLRequest(url: url)
         request.httpMethod = "POST"
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = httpBodyForPostStudentLocation(student).data(using: String.Encoding.utf8)
-        
-        print("httpBody = \(httpBodyForPostStudentLocation(student))")
-        print("request= \(request)")
-        
+        request.httpBody = httpBodyForPostStudentLocation(student).data(using: String.Encoding.utf8)        
         let _ = UdacityClient.sharedInstance.taskForParseGETRequest(request) { (parsedResult, error) in
             
             func sendError(_ error: String) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForPostStudentLocation(nil, NSError(domain: "getStudents", code: 1, userInfo: userInfo))
+                completionHandlerForPostStudentLocation(nil, NSError(domain: "postStudentLocationFor", code: 999, userInfo: userInfo))
             }
             
             guard (error == nil) else {

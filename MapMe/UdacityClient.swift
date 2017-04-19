@@ -39,27 +39,27 @@ class UdacityClient: NSObject {
         // 4. Make the request
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: String, code: Int) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForRequest(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                completionHandlerForRequest(nil, NSError(domain: "taskForUdacityPOSTMethod", code: code, userInfo: userInfo))
             }
             
             // Was there an error?
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
+                sendError("There was an error with your request: \(error!)", code: 0)
                 return
             }
             
             // Did we get a successful 2xx response?
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx")
+                sendError("Your request returned a status code other than 2xx", code: (response as? HTTPURLResponse)!.statusCode)
                 return
             }
             
             // Was there any data returned?
             guard let data = data else {
-                sendError("No data was returned by the request")
+                sendError("No data was returned by the request", code: 1)
                 return
             }
             
@@ -81,27 +81,28 @@ class UdacityClient: NSObject {
         
         let task = session.dataTask(with: request as URLRequest) { (data, response, error) in
             
-            func sendError(_ error: String) {
+            func sendError(_ error: String, code: Int) {
                 print(error)
                 let userInfo = [NSLocalizedDescriptionKey: error]
-                completionHandlerForRequest(nil, NSError(domain: "taskForPOSTMethod", code: 1, userInfo: userInfo))
+                
+                completionHandlerForRequest(nil, NSError(domain: "taskForParseGETMethod", code: code, userInfo: userInfo))
             }
             
             // Was there an error?
             guard (error == nil) else {
-                sendError("There was an error with your request: \(error!)")
+                sendError("There was an error with your request: \(error!)", code: 0)
                 return
             }
             
             // Did we get a successful 2xx response?
             guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
-                sendError("Your request returned a status code other than 2xx: \((response as? HTTPURLResponse)?.statusCode)")
+                sendError("Your request returned a status code other than 2xx", code: (response as? HTTPURLResponse)!.statusCode)
                 return
             }
             
             // Was there any data returned?
             guard let data = data else {
-                sendError("No data was returned by the request")
+                sendError("No data was returned by the request", code: 1)
                 return
             }
             

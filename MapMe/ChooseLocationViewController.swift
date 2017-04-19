@@ -17,12 +17,22 @@ class ChooseLocationViewController: UIViewController {
     @IBOutlet weak var addressTextView: UITextView!
     
     
+    // MARK: Properties
+    
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    
+    
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Setup UI
         addressTextView.delegate = self
+        activityIndicator.center = view.center
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.stopAnimating()
+        navigationController?.view.addSubview(activityIndicator)
     }
 
     
@@ -33,17 +43,24 @@ class ChooseLocationViewController: UIViewController {
         let geocoder = CLGeocoder()
         let userAddress = addressTextView.text!
         
+        activityIndicator.startAnimating()
+        
         geocoder.geocodeAddressString(userAddress) {placemarks, error in
             
             guard let placemarks = placemarks, placemarks.count > 0 else {
                 
-                AllertViewController.showAlertWithTitle("Location", message: "Location was not identified")
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    AllertViewController.showAlertWithTitle("Location", message: "Location was not identified")
+                }
                 return
             }
 
             let studyLocation = placemarks[0].location
             
             performUIUpdatesOnMain{
+                
+                self.activityIndicator.stopAnimating()
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let postLocationVC = storyboard.instantiateViewController(withIdentifier: "PostLocationViewController") as! PostLocationViewController
                 postLocationVC.studyLocation = studyLocation

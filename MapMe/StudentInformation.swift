@@ -21,19 +21,6 @@ struct Student {
     let createdAt: String?
     let updatedAt: String?
     
-    init() {
-        self.objectId = nil
-        self.uniqueKey = nil
-        self.firstName = nil
-        self.lastName = nil
-        self.mapString = nil
-        self.mediaURL = nil
-        self.latitude = nil
-        self.longitude = nil
-        self.createdAt = nil
-        self.updatedAt = nil
-    }
-    
     init(objectId: String? = nil, uniqueKey: String? = nil, firstName: String? = nil, lastName: String? = nil, mapString: String? = nil, mediaURL: String? = nil, latitude: Double? = nil, longitude: Double? = nil, createdAt: String? = nil, updatedAt: String? = nil) {
     
         self.objectId = objectId

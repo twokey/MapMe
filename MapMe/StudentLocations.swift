@@ -9,19 +9,26 @@
 import Foundation
 import MapKit
 
-struct StudentLocations {
+class StudentLocations {
     
     
     // MARK: Properties
-//    var user: Student?
-    var annotations = [MKPointAnnotation]()
+    var annotations: [MKPointAnnotation]
     
     // Shared instance
     static let sharedInstance = StudentLocations()
 
-    init(_ students: [Student]) {
+    
+    // MARK: Initializers
+    
+    init() {
+        annotations = []
+    }
+
+    
+    func updateStudentLocations(_ students: [Student]) {
         
-        //annotations = []
+        annotations.removeAll()
         
         for student in students {
 
@@ -31,7 +38,7 @@ struct StudentLocations {
             let lat = CLLocationDegrees(studentLat)
             let long = CLLocationDegrees(studentLong)
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//            let uniqueKey = student.uniqueKey ?? ""
+            let uniqueKey = student.uniqueKey ?? ""
 
             let first = student.firstName ?? ""
             let last = student.lastName ?? ""
@@ -46,11 +53,6 @@ struct StudentLocations {
             // Save student information (annotations) in app delegate
             annotations.append(annotation)
         }
-    }
-    
-    init() {
-//        user = nil
-        annotations = []
     }
     
 }

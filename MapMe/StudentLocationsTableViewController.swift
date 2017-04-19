@@ -17,7 +17,7 @@ class StudentLocationsTableViewController: UITableViewController {
     // MARK: Properties
     
     var annotations: [MKAnnotation] {
-        return (UIApplication.shared.delegate as! AppDelegate).annotations
+        return StudentLocations.sharedInstance.annotations
     }
     
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
@@ -82,6 +82,39 @@ class StudentLocationsTableViewController: UITableViewController {
     
     // MARK: Actions
 
+    @IBAction func reloadStudentConnections(_ sender: UIBarButtonItem) {
+        
+        // Setup UI; dim background
+        activityIndicator.startAnimating()
+        tableView.alpha = 0.5
+        
+        
+        // Get student's locations and links
+        UdacityClient.sharedInstance.getStudents() { students, error in
+            
+            if let students = students {
+                
+                // Update Student's location
+                StudentLocations.sharedInstance.updateStudentLocations(students)
+                
+                // Display updated locations
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.tableView.alpha = 1.0
+                    self.tableView.reloadData()
+                }
+            } else {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.tableView.alpha = 1.0
+                    self.tableView.reloadData()
+                    AllertViewController.showAlertWithTitle("Student Location", message: "Couldn't download new student's locations")
+                }
+            }
+        }
+        
+    }
+    
     @IBAction func logout(_ sender: UIBarButtonItem) {
 
         // Logout from Facebook
@@ -103,7 +136,7 @@ class StudentLocationsTableViewController: UITableViewController {
                 return
             }
             
-            if let sessionId = sessionId {
+            if let _ = sessionId {
                 self.dismiss(animated: true, completion: nil)
             } else {
                 performUIUpdatesOnMain {
@@ -114,55 +147,5 @@ class StudentLocationsTableViewController: UITableViewController {
             }
         }
     }
-    
-    @IBAction func reloadStudentConnections(_ sender: UIBarButtonItem) {
-        
-        // Setup UI; dim background
-        activityIndicator.startAnimating()
-        tableView.alpha = 0.5
 
-        
-        // Get student's locations and links
-        UdacityClient.sharedInstance.getStudents() { students, error in
-            
-            // Get reference to app delegate and clean students locations
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.annotations.removeAll()
-            
-            guard let students = students else {
-                return
-            }
-            
-            for student in students {
-                
-                // Create pin location from student coordinates
-                let studentLat = student.latitude ?? 0
-                let studentLong = student.longitude ?? 0
-                let lat = CLLocationDegrees(studentLat)
-                let long = CLLocationDegrees(studentLong)
-                let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                
-                let first = student.firstName ?? ""
-                let last = student.lastName ?? ""
-                let mediaURL = student.mediaURL ?? ""
-                
-                // Create annotation from student info
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                annotation.title = "\(first) \(last)"
-                annotation.subtitle = mediaURL
-                
-                // Save student information (annotations) in app delegate
-                appDelegate.annotations.append(annotation)
-            }
-            
-            // We have user data, students data (annotations) we can continue to map VC
-            performUIUpdatesOnMain {
-                self.activityIndicator.stopAnimating()
-                self.tableView.alpha = 1.0
-                self.tableView.reloadData()
-            }
-        }
-
-    }
 }

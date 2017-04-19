@@ -14,8 +14,8 @@ import FBSDKLoginKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var user = Student()
-    var annotations = [MKPointAnnotation]()
+//    var user = Student()
+//    var annotations = [MKPointAnnotation]()
     
     var window: UIWindow?
 

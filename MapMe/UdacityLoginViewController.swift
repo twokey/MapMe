@@ -29,7 +29,6 @@ class UdacityLoginViewController: UIViewController {
         // Set up interface
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
-        subscribeToKeyboardNotifications()
         userPassword.delegate = self
         userEmail.delegate = self
         
@@ -64,11 +63,8 @@ class UdacityLoginViewController: UIViewController {
                 return
             }
             
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            
-            // Get reference to App Delegate where we keep our model
             if let user = user {
-                appDelegate.user = user
+                UserInformation.sharedInstance.user = user
             }
             
             // Get student's locations and links; We will need them for next VC and a user is waiting anyway
@@ -84,44 +80,23 @@ class UdacityLoginViewController: UIViewController {
                     return
                 }
                 
-                guard let students = students else {
+                if let students = students {
+                    
+                    StudentLocations.sharedInstance.updateStudentLocations(students)
+                    
+                    // We have user data, students data (annotations) we can continue to map VC
+                    performUIUpdatesOnMain {
+                        self.activityIndicator.stopAnimating()
+                        self.interfaceDimmed(false)
+                        self.performSegue(withIdentifier: "userAuthorized", sender: self)
+                    }
+
+                } else {
                     performUIUpdatesOnMain {
                         self.activityIndicator.stopAnimating()
                         self.interfaceDimmed(false)
                         AllertViewController.showAlertWithTitle("Students Data", message: "Cannot download students locations")
                     }
-                    return
-                }
-
-                for student in students {
-
-                    // Create pin location from student coordinates
-                    let studentLat = student.latitude ?? 0
-                    let studentLong = student.longitude ?? 0
-                    let lat = CLLocationDegrees(studentLat)
-                    let long = CLLocationDegrees(studentLong)
-                    let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                   // let uniqueKey = student.uniqueKey ?? ""
-
-                    let first = student.firstName ?? ""
-                    let last = student.lastName ?? ""
-                    let mediaURL = student.mediaURL ?? ""
-
-                    // Create annotation from student info
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = coordinate
-                    annotation.title = "\(first) \(last)"
-                    annotation.subtitle = mediaURL
-
-                    // Save student information (annotations) in app delegate
-                    appDelegate.annotations.append(annotation)
-                }
-                
-                // We have user data, students data (annotations) we can continue to map VC
-                performUIUpdatesOnMain {
-                    self.activityIndicator.stopAnimating()
-                    self.interfaceDimmed(false)
-                    self.performSegue(withIdentifier: "userAuthorized", sender: self)
                 }
             }
         }
@@ -213,45 +188,50 @@ class UdacityLoginViewController: UIViewController {
 
         // Login with Udacity credentials
         UdacityClient.sharedInstance.getUdacityStudentIDforUser(userName, userPassword: userPassword) { userID, error in
-            
-            guard (error == nil) else {
-                print(error ?? "Error was not provided")
+
+            if let error = error {
+                print(error)
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
                     self.interfaceDimmed(false)
-                    AllertViewController.showAlertWithTitle("User ID", message: "Cannot get user ID. Try again")
+                    if error.code == 403 {
+                        AllertViewController.showAlertWithTitle("Login failed", message: "The user name or password is incorrect")
+                    } else {
+                        AllertViewController.showAlertWithTitle("Connection failed", message: "Cannot get user ID from a server. Try again")
+                    }
+                }
+                return
+            }
+
+            guard let userID = userID else {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.interfaceDimmed(false)
+                    AllertViewController.showAlertWithTitle("User ID", message: "User ID is not available. Try again")
                 }
                 return
             }
             
-            if let userID = userID {
-                guard let userID = Int(userID) else {
-                    performUIUpdatesOnMain {
-                        self.activityIndicator.stopAnimating()
-                        self.interfaceDimmed(false)
-                        AllertViewController.showAlertWithTitle("User ID", message: "User ID is not Int")
-                    }
-                    return
+            if let userIDInt = Int(userID) {
+                self.loginWithUserID(userIDInt)
+            } else {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    self.interfaceDimmed(false)
+                    AllertViewController.showAlertWithTitle("User ID", message: "User ID is not Int")
                 }
-                
-                self.loginWithUserID(userID)
             }
         }
     }
     
     @IBAction func udacitySignUp(_ sender: UIButton) {
-        let safaryViewController = SFSafariViewController(url: URL(string: "https://www.udacity.com/account/auth#!/signup")!)
-        present(safaryViewController, animated: true, completion: nil)
-        
+        UIApplication.shared.open(URL(string: "https://www.udacity.com/account/auth#!/signup")!, options: [:], completionHandler: nil)
     }
     
-    deinit {
-        unsubscribeFromKeyboardNotifications()
-    }
 }
 
 
-    // MARK: - FBSDK Delegate
+// MARK: - FBSDK Delegate
 
 extension UdacityLoginViewController: FBSDKLoginButtonDelegate {
     
