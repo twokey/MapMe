@@ -8,13 +8,19 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
 class ChooseLocationViewController: UIViewController {
 
     
     // MARK: Outlets
-    
+    @IBOutlet weak var studyLabel: UILabel!
+    @IBOutlet weak var linkLabel: UILabel!
     @IBOutlet weak var addressTextView: UITextView!
+    @IBOutlet weak var linkTextView: UITextView!
+    @IBOutlet weak var findLocationButton: UIButton!
+    @IBOutlet weak var postLocationButton: UIButton!
+    @IBOutlet weak var mapView: MKMapView!
     
     
     // MARK: Properties
@@ -33,6 +39,11 @@ class ChooseLocationViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
         navigationController?.view.addSubview(activityIndicator)
+        
+        linkLabel.isHidden = true
+        linkTextView.isHidden = true
+        postLocationButton.isHidden = true
+        mapView.isHidden = true
     }
 
     
@@ -42,8 +53,9 @@ class ChooseLocationViewController: UIViewController {
         
         let geocoder = CLGeocoder()
         let userAddress = addressTextView.text!
-        
+
         activityIndicator.startAnimating()
+        
         
         geocoder.geocodeAddressString(userAddress) {placemarks, error in
             
@@ -61,12 +73,33 @@ class ChooseLocationViewController: UIViewController {
             performUIUpdatesOnMain{
                 
                 self.activityIndicator.stopAnimating()
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let postLocationVC = storyboard.instantiateViewController(withIdentifier: "PostLocationViewController") as! PostLocationViewController
-                postLocationVC.studyLocation = studyLocation
-                postLocationVC.userAddress = userAddress
-                
-                self.navigationController?.pushViewController(postLocationVC, animated: true)
+                UIView.animate(withDuration: 0.3,
+                               delay: 0,
+                               options: .curveEaseOut,
+                               animations: {
+                                    self.studyLabel.isHidden = true
+                                    self.addressTextView.isHidden = true
+                                    self.findLocationButton.isHidden = true
+                                }) {_ in
+                                    UIView.animate(withDuration: 0.3,
+                                                   delay: 0,
+                                                   options: .curveEaseOut,
+                                                   animations: {
+                                                        self.linkLabel.isHidden = false
+                                                        self.linkTextView.isHidden = false
+                                                        self.postLocationButton.isHidden = false
+                                                        self.mapView.isHidden = false
+                                                    },
+                                                   completion: nil)
+                                }
+
+
+//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//                let postLocationVC = storyboard.instantiateViewController(withIdentifier: "PostLocationViewController") as! PostLocationViewController
+//                postLocationVC.studyLocation = studyLocation
+//                postLocationVC.userAddress = userAddress
+//                
+//                self.navigationController?.pushViewController(postLocationVC, animated: true)
             }
         }
     }

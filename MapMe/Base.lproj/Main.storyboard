@@ -296,8 +296,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-cT-8yZ">
-                                <rect key="frame" x="16" y="72" width="343" height="186"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qE1-cT-8yZ">
+                                <rect key="frame" x="16" y="72" width="343" height="595"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqn-dD-CAW">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="24"/>
@@ -308,14 +308,29 @@
                                             <fragment content="Where are you studying today?">
                                                 <attributes>
                                                     <font key="NSFont" size="18" name="HelveticaNeue"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                </attributes>
+                                            </fragment>
+                                        </attributedString>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N00-Ur-hru">
+                                        <rect key="frame" x="0.0" y="40" width="343" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="7fx-i2-iga"/>
+                                        </constraints>
+                                        <attributedString key="attributedText">
+                                            <fragment content="What would you like to share?">
+                                                <attributes>
+                                                    <font key="NSFont" size="18" name="HelveticaNeue"/>
+                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                 </attributes>
                                             </fragment>
                                         </attributedString>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Address Here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="wqq-RO-bVW">
-                                        <rect key="frame" x="0.0" y="40" width="343" height="100"/>
+                                        <rect key="frame" x="0.0" y="80" width="343" height="100"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="100" id="fbt-sp-25C"/>
@@ -323,9 +338,23 @@
                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" text="Enter your link here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="648-VI-40o" userLabel="Link Text View">
+                                        <rect key="frame" x="0.0" y="196" width="343" height="100"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="zYA-61-m2j">
+                                                <variation key="heightClass=compact-widthClass=compact" constant="40"/>
+                                            </constraint>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sKF-7q-Biz">
-                                        <rect key="frame" x="0.0" y="156" width="343" height="30"/>
+                                        <rect key="frame" x="0.0" y="312" width="343" height="30"/>
                                         <color key="backgroundColor" red="0.29411764709999999" green="0.70588235290000001" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="6jc-ZA-rtX"/>
+                                        </constraints>
                                         <state key="normal" title="Find on the Map">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -333,7 +362,40 @@
                                             <action selector="geocodeForward:" destination="m5G-yG-rb0" eventType="touchUpInside" id="84r-P5-xgI"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="260" verticalHuggingPriority="260" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="54r-Fu-kTZ">
+                                        <rect key="frame" x="0.0" y="358" width="343" height="30"/>
+                                        <color key="backgroundColor" red="0.29411764709999999" green="0.70588235290000001" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="GDA-sq-nk9"/>
+                                        </constraints>
+                                        <state key="normal" title="Post Location">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="6q6-vO-uZN"/>
+                                        </connections>
+                                    </button>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JAa-EJ-Fc5">
+                                        <rect key="frame" x="0.0" y="404" width="343" height="191"/>
+                                    </mapView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="Qqn-dD-CAW" firstAttribute="leading" secondItem="qE1-cT-8yZ" secondAttribute="leading" id="680-z3-6hy"/>
+                                    <constraint firstItem="JAa-EJ-Fc5" firstAttribute="leading" secondItem="qE1-cT-8yZ" secondAttribute="leading" id="D7k-iS-lpx"/>
+                                    <constraint firstItem="N00-Ur-hru" firstAttribute="leading" secondItem="qE1-cT-8yZ" secondAttribute="leading" id="FLL-RR-Ecy"/>
+                                    <constraint firstItem="wqq-RO-bVW" firstAttribute="leading" secondItem="qE1-cT-8yZ" secondAttribute="leading" id="FRQ-kt-O7s"/>
+                                    <constraint firstAttribute="trailing" secondItem="wqq-RO-bVW" secondAttribute="trailing" id="QE7-CS-gAf"/>
+                                    <constraint firstAttribute="trailing" secondItem="JAa-EJ-Fc5" secondAttribute="trailing" id="UKl-nb-s2Q"/>
+                                    <constraint firstItem="JAa-EJ-Fc5" firstAttribute="top" secondItem="54r-Fu-kTZ" secondAttribute="bottom" constant="16" id="XW0-az-R6O"/>
+                                    <constraint firstAttribute="trailing" secondItem="54r-Fu-kTZ" secondAttribute="trailing" id="YMt-Ms-nmH"/>
+                                    <constraint firstAttribute="trailing" secondItem="N00-Ur-hru" secondAttribute="trailing" id="cRW-H1-Z3t"/>
+                                    <constraint firstItem="sKF-7q-Biz" firstAttribute="leading" secondItem="qE1-cT-8yZ" secondAttribute="leading" id="eZA-NY-5jd"/>
+                                    <constraint firstItem="648-VI-40o" firstAttribute="leading" secondItem="qE1-cT-8yZ" secondAttribute="leading" id="fNr-uT-1e0"/>
+                                    <constraint firstAttribute="trailing" secondItem="648-VI-40o" secondAttribute="trailing" id="jZd-gY-ATO"/>
+                                    <constraint firstItem="54r-Fu-kTZ" firstAttribute="leading" secondItem="qE1-cT-8yZ" secondAttribute="leading" id="lNT-1D-WLX"/>
+                                    <constraint firstAttribute="trailing" secondItem="sKF-7q-Biz" secondAttribute="trailing" id="uyw-lY-bsQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Qqn-dD-CAW" secondAttribute="trailing" id="zXK-nj-LIf"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.68424499029999997" green="0.883533597" blue="0.95911616089999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -341,6 +403,7 @@
                             <constraint firstItem="qE1-cT-8yZ" firstAttribute="leading" secondItem="P3c-Gs-e7R" secondAttribute="leadingMargin" id="1ZZ-jp-s8c"/>
                             <constraint firstItem="qE1-cT-8yZ" firstAttribute="top" secondItem="nYx-e6-UgE" secondAttribute="bottom" constant="8" id="V4N-qe-TmF"/>
                             <constraint firstItem="qE1-cT-8yZ" firstAttribute="trailing" secondItem="P3c-Gs-e7R" secondAttribute="trailingMargin" id="gF8-jY-cpZ"/>
+                            <constraint firstItem="T1A-SD-2Rn" firstAttribute="top" secondItem="qE1-cT-8yZ" secondAttribute="bottom" id="hgh-D6-xl0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Pqb-Dw-Uh6">
@@ -352,6 +415,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addressTextView" destination="wqq-RO-bVW" id="71z-7g-lWv"/>
+                        <outlet property="findLocationButton" destination="sKF-7q-Biz" id="2BS-Yv-MnD"/>
+                        <outlet property="linkLabel" destination="N00-Ur-hru" id="BgH-np-nWf"/>
+                        <outlet property="linkTextView" destination="648-VI-40o" id="SV2-29-gJ4"/>
+                        <outlet property="mapView" destination="JAa-EJ-Fc5" id="WjR-Oe-3Xl"/>
+                        <outlet property="postLocationButton" destination="54r-Fu-kTZ" id="deO-aw-y84"/>
+                        <outlet property="studyLabel" destination="Qqn-dD-CAW" id="Ngk-3q-sLT"/>
                         <segue destination="oE1-B7-sOv" kind="show" identifier="addResourse" id="afH-6O-boB"/>
                     </connections>
                 </viewController>
