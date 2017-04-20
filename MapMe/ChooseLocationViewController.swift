@@ -24,8 +24,12 @@ class ChooseLocationViewController: UIViewController {
     
     
     // MARK: Properties
-    
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    var studyLocation: CLLocation!
+    var userAddress: String!
+    var user: Student {
+        return UserInformation.sharedInstance.user
+    }
     
     
     // MARK: Lifecycle
@@ -35,28 +39,31 @@ class ChooseLocationViewController: UIViewController {
         
         // Setup UI
         addressTextView.delegate = self
+        linkTextView.delegate = self
         activityIndicator.center = view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
         navigationController?.view.addSubview(activityIndicator)
         
+        // Hide map and filed to post address until location is specified
         linkLabel.isHidden = true
         linkTextView.isHidden = true
         postLocationButton.isHidden = true
         mapView.isHidden = true
     }
-
+    
     
     // MARK: Actions
     
+    // Find coordinates for the study location address
     @IBAction func geocodeForward(_ sender: UIButton) {
         
         let geocoder = CLGeocoder()
-        let userAddress = addressTextView.text!
+        userAddress = addressTextView.text!
 
         activityIndicator.startAnimating()
         
-        
+        // Reverse geocogin for the study location address
         geocoder.geocodeAddressString(userAddress) {placemarks, error in
             
             guard let placemarks = placemarks, placemarks.count > 0 else {
@@ -68,11 +75,12 @@ class ChooseLocationViewController: UIViewController {
                 return
             }
 
-            let studyLocation = placemarks[0].location
+            self.studyLocation = placemarks[0].location
             
             performUIUpdatesOnMain{
                 
                 self.activityIndicator.stopAnimating()
+                // Hide field to find a study location and show views to post the study location
                 UIView.animate(withDuration: 0.3,
                                delay: 0,
                                options: .curveEaseOut,
@@ -89,22 +97,68 @@ class ChooseLocationViewController: UIViewController {
                                                         self.linkTextView.isHidden = false
                                                         self.postLocationButton.isHidden = false
                                                         self.mapView.isHidden = false
+                                                        self.centerMapOnLocation(self.studyLocation)
                                                     },
-                                                   completion: nil)
-                                }
+                                                   completion: nil)}
 
+            }
+        }
+    }
 
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                let postLocationVC = storyboard.instantiateViewController(withIdentifier: "PostLocationViewController") as! PostLocationViewController
-//                postLocationVC.studyLocation = studyLocation
-//                postLocationVC.userAddress = userAddress
-//                
-//                self.navigationController?.pushViewController(postLocationVC, animated: true)
+    // Post study location to the Udacity server
+    @IBAction func postStudyLocation(_ sender: UIButton) {
+        let latitude = studyLocation.coordinate.latitude
+        let longitude = studyLocation.coordinate.longitude
+        let student = Student(uniqueKey: user.uniqueKey, firstName: user.firstName, lastName: user.lastName, mapString: userAddress, mediaURL: linkTextView.text!, latitude: latitude, longitude: longitude)
+        
+        activityIndicator.startAnimating()
+        
+        UdacityClient.sharedInstance.postStudentLocationFor(student: student) { objectId, error in
+            
+            guard (error == nil) else {
+                print(error ?? "Error was not provided")
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    AllertViewController.showAlertWithTitle("Study Location", message: "Couldn't post student's study location. Please try again")
+                }
+                return
+            }
+            
+            if let _ = objectId {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    let okAction = UIAlertAction(title: "Ok", style: UIAlertActionStyle.default) { (action) in
+                        self.parent?.dismiss(animated: true, completion: nil)
+                    }
+                    let alert = UIAlertController(title: "New Location", message: "New study location has been submited successfuly", preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(okAction)
+                    UIApplication.topViewController()?.present(alert, animated: true, completion: nil)
+                }
+            } else {
+                performUIUpdatesOnMain {
+                    self.activityIndicator.stopAnimating()
+                    AllertViewController.showAlertWithTitle("Study Location", message: "Couldn't post student's study location. Please try again")
+                }
             }
         }
     }
     
-    // MARK: Actions
+    
+    // MARK: Helpers
+    
+    private func centerMapOnLocation(_ location: CLLocation, radius: CLLocationDistance = 1000) {
+        
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, radius * 2.0, radius * 2.0)
+                mapView.setRegion(coordinateRegion, animated: true)
+        
+        let studyLocationAnnotation = MKPointAnnotation()
+        studyLocationAnnotation.coordinate = location.coordinate
+        studyLocationAnnotation.title = "\(UserInformation.sharedInstance.user.firstName!)"
+        studyLocationAnnotation.subtitle = "Is studying here"
+
+        mapView.addAnnotation(studyLocationAnnotation)
+    }
+    
     
     @IBAction func dismissViewController(_ sender: UIBarButtonItem) {
         

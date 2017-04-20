@@ -373,6 +373,7 @@
                                         </state>
                                         <connections>
                                             <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="6q6-vO-uZN"/>
+                                            <action selector="postStudyLocation:" destination="m5G-yG-rb0" eventType="touchUpInside" id="pbb-uC-LEG"/>
                                         </connections>
                                     </button>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="JAa-EJ-Fc5">
