@@ -111,11 +111,8 @@ class ChooseLocationViewController: UIViewController {
     // Post study location to the Udacity server
     @IBAction func postStudyLocation(_ sender: UIButton) {
         let latitude = studyLocation.coordinate.latitude
-        print(latitude)
         let longitude = studyLocation.coordinate.longitude
-        print(longitude)
         let student = Student(uniqueKey: user.uniqueKey, firstName: user.firstName, lastName: user.lastName, mapString: userAddress, mediaURL: linkTextView.text!, latitude: latitude, longitude: longitude)
-        print(student)
         
         activityIndicator.startAnimating()
         

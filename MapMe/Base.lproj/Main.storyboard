@@ -158,7 +158,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9S4-JQ-hNY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1631" y="-700"/>
+            <point key="canvasLocation" x="1630" y="-744"/>
         </scene>
         <!--Student Locations-->
         <scene sceneID="irq-6n-hVm">
@@ -215,7 +215,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CPe-to-zkF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2588" y="-701.19940029985014"/>
+            <point key="canvasLocation" x="2582" y="-744"/>
         </scene>
         <!--Student Locations-->
         <scene sceneID="2Fx-AY-Boj">
@@ -425,7 +425,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7dl-fj-NXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4807.1999999999998" y="-283.80809595202402"/>
+            <point key="canvasLocation" x="4828" y="-370"/>
         </scene>
         <!--List-->
         <scene sceneID="JvO-9h-I7j">
@@ -460,7 +460,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dl8-wu-DfS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3868" y="-283.80809595202402"/>
+            <point key="canvasLocation" x="3871" y="-370"/>
         </scene>
     </scenes>
     <resources>
@@ -470,6 +470,6 @@
         <image name="Pin" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8dw-UN-NuC"/>
+        <segue reference="j6o-r6-VnI"/>
     </inferredMetricsTieBreakers>
 </document>

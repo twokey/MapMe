@@ -204,7 +204,6 @@ extension UdacityClient {
         let method = "/StudentLocation"
         let params = ["limit": 100, "order": "-updatedAt"] as [String : AnyObject]
         let url = parseURLFromParameters(params, withPathExtension: method)
-        print(url)
         let request = NSMutableURLRequest(url: url)
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
