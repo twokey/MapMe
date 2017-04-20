@@ -224,6 +224,7 @@ class UdacityLoginViewController: UIViewController {
         }
     }
     
+    // Link to sign up for the Udacity account
     @IBAction func udacitySignUp(_ sender: UIButton) {
         UIApplication.shared.open(URL(string: "https://www.udacity.com/account/auth#!/signup")!, options: [:], completionHandler: nil)
     }

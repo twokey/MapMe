@@ -14,6 +14,7 @@ class ChooseLocationViewController: UIViewController {
 
     
     // MARK: Outlets
+    
     @IBOutlet weak var studyLabel: UILabel!
     @IBOutlet weak var linkLabel: UILabel!
     @IBOutlet weak var addressTextView: UITextView!
@@ -24,6 +25,7 @@ class ChooseLocationViewController: UIViewController {
     
     
     // MARK: Properties
+    
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     var studyLocation: CLLocation!
     var userAddress: String!
@@ -40,6 +42,7 @@ class ChooseLocationViewController: UIViewController {
         // Setup UI
         addressTextView.delegate = self
         linkTextView.delegate = self
+        self.hideKeyboard()
         activityIndicator.center = view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
@@ -108,8 +111,11 @@ class ChooseLocationViewController: UIViewController {
     // Post study location to the Udacity server
     @IBAction func postStudyLocation(_ sender: UIButton) {
         let latitude = studyLocation.coordinate.latitude
+        print(latitude)
         let longitude = studyLocation.coordinate.longitude
+        print(longitude)
         let student = Student(uniqueKey: user.uniqueKey, firstName: user.firstName, lastName: user.lastName, mapString: userAddress, mediaURL: linkTextView.text!, latitude: latitude, longitude: longitude)
+        print(student)
         
         activityIndicator.startAnimating()
         
@@ -119,7 +125,7 @@ class ChooseLocationViewController: UIViewController {
                 print(error ?? "Error was not provided")
                 performUIUpdatesOnMain {
                     self.activityIndicator.stopAnimating()
-                    AllertViewController.showAlertWithTitle("Study Location", message: "Couldn't post student's study location. Please try again")
+                    AllertViewController.showAlertWithTitle("Study Location", message: "Error while posting student's study location. Please try again")
                 }
                 return
             }
@@ -167,12 +173,23 @@ class ChooseLocationViewController: UIViewController {
 
 }
 
-    // MARK: - UITextView Delegate
+// MARK: - UITextView Delegate
 
 extension ChooseLocationViewController: UITextViewDelegate {
     
+    // Clear text view on beging editing
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = ""
     }
     
+    // Dissmiss keyboard on Enter
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        else {
+            return true
+        }
+    }
 }

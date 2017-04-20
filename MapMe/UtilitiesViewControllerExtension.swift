@@ -44,6 +44,21 @@ extension UIViewController: UITextFieldDelegate {
         
         return keyboardHeight
     }
+    
+    // Hide keyboard on tap outside keyboard
+    func hideKeyboard()
+    {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(
+            target: self,
+            action: #selector(UIViewController.dismissKeyboard))
+        
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard()
+    {
+        view.endEditing(true)
+    }
 
     
     // MARK: - UITextFieldDelegate
@@ -52,5 +67,6 @@ extension UIViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
     
 }

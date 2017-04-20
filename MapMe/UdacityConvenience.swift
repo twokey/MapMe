@@ -198,7 +198,7 @@ extension UdacityClient {
         }
     }
 
-    
+    // Download students locations
     func getStudents(_ completionHandlerForStudentLocations: @escaping (_ students: [Student]?, _ errorString: NSError?) -> Void) {
         
         let method = "/StudentLocation"
@@ -267,6 +267,7 @@ extension UdacityClient {
         
     }
     
+    // Post student location
     func postStudentLocationFor(student: Student, completionHandlerForPostStudentLocation: @escaping (_ students: String?, _ errorString: NSError?) -> Void) {
         
         let method = "/StudentLocation"
@@ -276,7 +277,7 @@ extension UdacityClient {
         request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = httpBodyForPostStudentLocation(student).data(using: String.Encoding.utf8)        
+        request.httpBody = httpBodyForPostStudentLocation(student).data(using: String.Encoding.utf8)
         let _ = UdacityClient.sharedInstance.taskForParseGETRequest(request) { (parsedResult, error) in
             
             func sendError(_ error: String) {

@@ -39,7 +39,6 @@ class StudentLocationsMapViewController: UIViewController {
         // Setup UI
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
-        
     }
 
     
@@ -153,7 +152,6 @@ extension StudentLocationsMapViewController: MKMapViewDelegate {
         } else {
             AllertViewController.showAlertWithTitle("URL Address", message: "URL is not valid")
         }
-        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

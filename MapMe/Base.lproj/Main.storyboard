@@ -372,7 +372,6 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="6q6-vO-uZN"/>
                                             <action selector="postStudyLocation:" destination="m5G-yG-rb0" eventType="touchUpInside" id="pbb-uC-LEG"/>
                                         </connections>
                                     </button>
@@ -422,98 +421,11 @@
                         <outlet property="mapView" destination="JAa-EJ-Fc5" id="WjR-Oe-3Xl"/>
                         <outlet property="postLocationButton" destination="54r-Fu-kTZ" id="deO-aw-y84"/>
                         <outlet property="studyLabel" destination="Qqn-dD-CAW" id="Ngk-3q-sLT"/>
-                        <segue destination="oE1-B7-sOv" kind="show" identifier="addResourse" id="afH-6O-boB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7dl-fj-NXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4807.1999999999998" y="-283.80809595202402"/>
-        </scene>
-        <!--Post Location View Controller-->
-        <scene sceneID="Mgd-R1-5QI">
-            <objects>
-                <viewController storyboardIdentifier="PostLocationViewController" id="oE1-B7-sOv" customClass="PostLocationViewController" customModule="MapMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="D4A-yU-1uF"/>
-                        <viewControllerLayoutGuide type="bottom" id="Vtv-qr-tit"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="bMJ-sO-TbR">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wRf-Eg-2dl">
-                                <rect key="frame" x="16" y="72" width="343" height="595"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="hrV-dW-chL">
-                                        <rect key="frame" x="0.0" y="0.0" width="343" height="170"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LVx-Tl-TMx">
-                                                <rect key="frame" x="0.0" y="0.0" width="343" height="24"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="24" id="6Lg-h1-wvp"/>
-                                                </constraints>
-                                                <attributedString key="attributedText">
-                                                    <fragment content="What would you like to share?">
-                                                        <attributes>
-                                                            <font key="NSFont" size="18" name="HelveticaNeue"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" text="Enter your link here" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8Zc-Ln-l1V">
-                                                <rect key="frame" x="0.0" y="32" width="343" height="100"/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="100" id="XDX-Xo-MsX">
-                                                        <variation key="heightClass=compact-widthClass=compact" constant="40"/>
-                                                    </constraint>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textView>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="260" verticalHuggingPriority="260" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBb-D2-0IP">
-                                                <rect key="frame" x="0.0" y="140" width="343" height="30"/>
-                                                <color key="backgroundColor" red="0.29411764709999999" green="0.70588235290000001" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="lAh-sY-Y97"/>
-                                                </constraints>
-                                                <state key="normal" title="Post Location">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="postLocation:" destination="oE1-B7-sOv" eventType="touchUpInside" id="mIW-lf-ES1"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="47V-5t-mOp">
-                                        <rect key="frame" x="0.0" y="186" width="343" height="409"/>
-                                    </mapView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="47V-5t-mOp" secondAttribute="bottom" id="KKo-WK-BMH"/>
-                                </constraints>
-                                <variation key="heightClass=compact-widthClass=compact" alignment="top" axis="horizontal"/>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.68424499029999997" green="0.883533597" blue="0.95911616089999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="wRf-Eg-2dl" firstAttribute="leading" secondItem="bMJ-sO-TbR" secondAttribute="leadingMargin" id="3DF-5w-IW3"/>
-                            <constraint firstItem="wRf-Eg-2dl" firstAttribute="trailing" secondItem="bMJ-sO-TbR" secondAttribute="trailingMargin" id="4Fk-sp-e01"/>
-                            <constraint firstAttribute="bottom" secondItem="wRf-Eg-2dl" secondAttribute="bottom" id="53q-8V-Ddn"/>
-                            <constraint firstItem="wRf-Eg-2dl" firstAttribute="top" secondItem="D4A-yU-1uF" secondAttribute="bottom" constant="8" id="bB8-ZC-MF2"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="o1q-7y-66b"/>
-                    <connections>
-                        <outlet property="linkTextView" destination="8Zc-Ln-l1V" id="b1T-1r-VMP"/>
-                        <outlet property="mapView" destination="47V-5t-mOp" id="BjF-ZE-elM"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cWi-CU-aiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="5760.8000000000002" y="-284.70764617691157"/>
         </scene>
         <!--List-->
         <scene sceneID="JvO-9h-I7j">
